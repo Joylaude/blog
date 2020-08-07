@@ -1,351 +1,30 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
-<!--[if lt IE 9]>
-        <style>body {display: none; background: none !important} </style>
-        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
-    <![endif]-->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="keywords" content="JoyLau,joylau,JoyLau  blog,刘法,刘法的博客,刘法的技术与思考,Java,JavaWeb,Web程序员,Web开发,JavaWeb开发,个人博客">
-<meta name="format-detection" content="telephone=no">
-<meta name="author" content="JoyDe">
-
-
-<meta name="description" content="最近在复习springcloud知识点,浅谈一下个人见解">
-<meta name="keywords" content="技能">
-<meta property="og:type" content="article">
-<meta property="og:title" content="springcloud天魔大法">
-<meta property="og:url" content="http://123.56.249.40/2020/08/05/springcloud天魔大法/index.html">
-<meta property="og:site_name" content="lqd的个人博客">
-<meta property="og:description" content="最近在复习springcloud知识点,浅谈一下个人见解">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="c:/Users/86177/Desktop/最强帅的技术思考与分享/天魔img/Eureka.png">
-<meta property="og:image" content="c:/Users/86177/Desktop/%E6%95%A3%E8%AF%BE/4_spring%20cloud/day02/spring%20cloud%20day02/image-20200503111117061.png">
-<meta property="og:updated_time" content="2020-08-05T12:54:28.866Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="springcloud天魔大法">
-<meta name="twitter:description" content="最近在复习springcloud知识点,浅谈一下个人见解">
-<meta name="twitter:image" content="c:/Users/86177/Desktop/最强帅的技术思考与分享/天魔img/Eureka.png">
-
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-
-    <link rel="alternate" href="/atom.xml" title="lqd的个人博客" type="application/atom+xml">
-
-
-
-    <link rel="shortcut icon" href="//image.joylau.cn/favicon.ico">
-
-
-
-    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
-
-
-
-    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
-
-
-
-    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
-
-
-<link rel="stylesheet" href="/css/style.css">
-
-
-
-<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-
-
-<title>springcloud天魔大法 | lqd的个人博客</title>
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-
-<script>
-    var yiliaConfig = {
-        fancybox: true,
-        animate: true,
-        isHome: false,
-        isPost: true,
-        isArchive: false,
-        isTag: false,
-        isCategory: false,
-        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: true
-    }
-</script>
-
-
-    <script> yiliaConfig.jquery_ui = [false]; </script>
-
-
-
-    <script> yiliaConfig.rootUrl = "\/";</script>
-
-
-
-
-
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?691c26474b1733df80dca4dfa7ba5536";
-            var s = document.getElementsByTagName("script")[0]; 
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-
-
-
-    <script src="//image.joylau.cn/blog/chaffle.min.js"></script>
-
-
-    <script src="//image.joylau.cn/blog/lettering.js"></script>
-    <script src="//image.joylau.cn/blog/textillate.js"></script>
-
-</head></html>
-<body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="//image.joylau.cn/blog/JoyLau.jpg" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a class="chaffle" data-lang="en" href="/">JoyDe</a></h1>
-        </hgroup>
-
-        
-        <p class="header-subtitle chaffle" data-lang="zh">最强帅的技术学习与思考</p>
-        
-
-        
-            <form id="search-form">
-            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true">
-            <i class="fa fa-times" onclick="resetSearch()"></i>
-            </form>
-            <div id="local-search-result"></div>
-            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
-        
-
-
-        
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li class="chaffle" data-lang="zh">菜单</li>
-                        <li class="chaffle" data-lang="zh">标签</li>
-                        
-                        <li class="chaffle" data-lang="zh">友情链接</li>
-                        
-                        
-                        <li class="chaffle" data-lang="zh">关于</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a class="chaffle" data-lang="zh" href="/">主页</a></li>
-                        
-                            <li><a class="chaffle" data-lang="zh" href="/archives/">所有文章</a></li>
-                        
-                            <li><a class="chaffle" data-lang="zh" href="/tags/">标签云</a></li>
-                        
-                            <li><a class="chaffle" data-lang="zh" href="/about/">留言板</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" href="mailto:2587038142@qq.com" title="Email"></a>
-                            
-                                <a class="fa 知乎" href="https://www.zhihu.com/" title="知乎"></a>
-                            
-                                <a class="fa GitHub" href="https://github.com/JoyLau" title="GitHub"></a>
-                            
-                                <a class="fa Facebook" href="https://www.facebook.com/profile.php?id=100007776496425" title="Facebook"></a>
-                            
-                                <a class="fa 网易云音乐" href="http://music.163.com/#/user/home?id=246512565" title="网易云音乐"></a>
-                            
-                                <a class="fa QQ" href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2587038142" title="QQ"></a>
-                            
-                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
-                            
-                        </ul>
-                    </nav>
-                </section>
-                
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/技能/">技能</a></li></ul>
-                    </div>
-                </section>
-                
-                
-                
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a class="main-nav-link switch-friends-link" href="http://www.joylau.cn/">JoyLau</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="http://life.joylau.cn/">JoyLau’life</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="http://media.joylau.cn/">JoyMedia</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="http://blog.wfyvv.com/">wfyvv</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="http://chaxiaoniu.oschina.io/">CherryChang</a>
-                    
-                    </div>
-                </section>
-                
-
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">整理一些在项目中用到的小知识或者技术点做一个总结及叙述，希望通过这些记录，能够将自己的学习成果归纳出来，与大家分享交流，同时能够对这些技术进行备忘，以便日后查询</div>
-                </section>
-                
-            </div>
-        </div>
-    </header>                
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-      <div class="overlay">
-          <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">JoyDe</a></h1>
-      </div>
-    <div class="intrude-less">
-        <header id="header" class="inner">
-            <a href="/" class="profilepic">
-                <img src="//image.joylau.cn/blog/JoyLau.jpg" class="animated zoomIn">
-            </a>
-            <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页">JoyDe</a></h1>
-            </hgroup>
-            
-            <p class="header-subtitle">最强帅的技术学习与思考</p>
-            
-            <nav class="header-menu">
-                <ul>
-                
-                    <li><a href="/">主页</a></li>
-                
-                    <li><a href="/archives/">所有文章</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
-                
-                    <li><a href="/about/">留言板</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-            <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" target="_blank" href="mailto:2587038142@qq.com" title="Email"></a>
-                            
-                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/" title="知乎"></a>
-                            
-                                <a class="fa GitHub" target="_blank" href="https://github.com/JoyLau" title="GitHub"></a>
-                            
-                                <a class="fa Facebook" target="_blank" href="https://www.facebook.com/profile.php?id=100007776496425" title="Facebook"></a>
-                            
-                                <a class="fa 网易云音乐" target="_blank" href="http://music.163.com/#/user/home?id=246512565" title="网易云音乐"></a>
-                            
-                                <a class="fa QQ" target="_blank" href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2587038142" title="QQ"></a>
-                            
-                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
-                            
-                        </ul>
-            </nav>
-        </header>                
-    </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于">
-</nav>
-      <div class="body-wrap"><article id="post-springcloud天魔大法" class="article article-type-post" itemscope itemprop="blogPost">
+<?xml version="1.0" encoding="utf-8"?>
+<search>
   
-    <div class="article-meta">
-      <a href="/2020/08/05/springcloud天魔大法/" class="article-date">
-      <time datetime="2020-08-05T00:51:16.000Z" itemprop="datePublished">2020-08-05</time>
-</a>
-    </div>
   
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy">
+    <entry>
+      <title><![CDATA[Hellow World]]></title>
+      <url>http://123.56.249.40/2020/08/07/Hellow-World/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
     
+    <entry>
+      <title><![CDATA[Hello My First Blog]]></title>
+      <url>http://123.56.249.40/2020/08/07/Hello-My-First-Blog/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
     
-      <header class="article-header">
-           <div id="jl_custom">
-                
+    <entry>
+      <title><![CDATA[springcloud天魔大法]]></title>
+      <url>http://123.56.249.40/2020/08/05/springcloud%E5%A4%A9%E9%AD%94%E5%A4%A7%E6%B3%95/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
 
-                
-            </div>
-        <h1 class="article-title article-tlt-h" itemprop="name">springcloud天魔大法</h1>
-      </header>
-      
-      <div class="article-info article-info-post">
-        <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/其他篇/">其他篇</a>
-    </div>
-        <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技能/">技能</a></li></ul>
-    </div>
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <a id="more"></a>
-
-<h2 id><a href="#" class="headerlink" title></a></h2><h3 id="何为springcloud"><a href="#何为springcloud" class="headerlink" title="何为springcloud?"></a>何为springcloud?</h3><hr>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h3 id="何为springcloud"><a href="#何为springcloud" class="headerlink" title="何为springcloud?"></a>何为springcloud?</h3><hr>
 <p>springcloud: Spring Cloud是一系列框架的有序集合。它利用<a href="https://baike.baidu.com/item/Spring%20Boot/20249767">Spring Boot</a>的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以用Spring Boot的开发风格做到一键启动和部署。Spring Cloud并没有重复制造轮子，它只是将各家公司开发的比较成熟、经得起实际考验的服务框架组合起来，通过Spring Boot风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。</p>
 <p>那么问题产生了,什么是分布式系统?</p>
 <hr>
@@ -608,250 +287,162 @@
 <p>bus:消息总线</p>
 <p>stream:消息驱动</p>
 <p>sleuth+zipkin:链路追踪</p>
-
+]]></content>
       
-    </div>
+        <categories>
+            
+            <category> 其他篇 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 技能 </tag>
+            
+        </tags>
+        
+    </entry>
     
-  </div>
+    <entry>
+      <title><![CDATA[Springboot九阳神功]]></title>
+      <url>http://123.56.249.40/2020/08/05/springboot%E4%B9%9D%E9%98%B3%E7%A5%9E%E5%8A%9F/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
+
+<h3 id="何为springboot"><a href="#何为springboot" class="headerlink" title="何为springboot?"></a>何为springboot?</h3><p>可以快速搭建spring工程,不是一个新的框架,它只是对spring进行了高度的封装  此框架不需要配置xml，而是依赖于像MAVEN这样的构建系统</p>
+<p>为何我把springboot称为九阳神功?</p>
+<p>springboot:号称java的九阳神功 是因为 只要学会了springboot 学什么武功都快,甚至你都不需要理解真气是如何运行的,你就能释放出武功招式,简单来说,就是你只需要放技能就行了.</p>
+<p>那什么是spring呢 spring是一种service组件(事务):我愿称之为练武的基础—&gt;打通奇经八脉,里面很复杂,正常打通,需要耗时很久.</p>
+<p>Spring是分层的 Java SE/EE(点击Java SE/EE查看详情)应用 full-stack(全栈,个人理解吹一手 全能) 轻量级开源框架(框架 点击目标查看详情)，以 IoC（Inverse Of Control：反转控制）、DI(依赖注入) 和 AOP（Aspect Oriented Programming：面向切面编程）为内核。</p>
+<p>提供了展现层 SpringMVC和  持久层 Spring JDBCTemplate以及业务层事务管理等众多的企业级应用技术，还能整合开源世界众多著名的第三方框架和类库，逐渐成为使用最多的Java EE 企业应用开源框架</p>
+<p>他是怎么做的呢?</p>
+<p>①导入 Spring 开发的基本包坐标  pom 文件 里面<dependencies>  导入每一个我们需要的第三方依赖jar包                                            spring、springmvc、redis、mybaits、log4j、mysql-connector-java 等等相关jar …</p>
+<p>②编写 Dao 接口和实现类  根据导入的依赖</p>
+<p>③创建 Spring 核心配置文件  applicationContext*.xml 以及配置web.xml :Listener配置、Filter配置、Servlet配置…….</p>
+<p>④在 Spring 配置文件中配置 ,在applicationContext*.xml 文件中配置数据库连接、配置spring事务,配置视图解析器,开启注解、自动扫描功能,<bean>标签 注入Bean定义 (或者@Component系列注解 )</p>
+<p>⑤使用 Spring 的 API 获得 Bean 实例 例如 JbdcTemplate 的实例来操作数据库</p>
+<p>⑥配置完成后部署tomcat、启动调试</p>
+<p>spring 配合springMVC Mybatis 组成了当下主流的一种SSM框架 完成web开发</p>
+<p>总结一下 繁琐点 </p>
+<p>1:需要导入各种<dependency>  几十多种或以上的第三方依赖jar包 还需要解决各种依赖以及版本的冲突                                                       2:IOC容器中需要我们自己去定义各种<bean>标签  来进行bean定义 以及配置数据库连接、配置spring事务,配置视图解析器,开启注解、自动扫描功能  核心配置xml文件需要大量的编写       以及web.xml文件的编写                                                                                                                       </p>
+<p>如此看来 如何解决上述两个问题成为简化开发的关键点</p>
+<p>如何解决繁琐的导入依赖? </p>
+<p>springboot :解决问题1,提供了一种起步依赖 起步依赖本质上是一个Maven项目对象模型（Project Object Model，POM），定义了对其他库的传递依赖， 将实现某项功能的全部依赖 聚合为一个一个依赖 spring以starter 命名</p>
+<p>springboot自动装配:Spring Boot的自动配置是一个运行时（更准确地说，是应用程序启动时）的过程，考虑了众多因素，才决定Spring配置应该用哪个，不该用哪个。该过程是SpringBoot自动完成的。导入的起步依赖jar中已经定义好了,直接使用就可以</p>
+<p>springboot:还额外提供了一些辅助功能,例如嵌入式服务器 例如tomcat 也就无需在pom文件中导入tomcat插件.以psvm 就可以启动项目了.</p>
+<p>Spring Boot自动装配原理源码分析</p>
+<p>Spring Boot规定，项目的主配置类必须放在最外层包，也就是说，所有的类都必须放在主配置类的同级包或者子包里，这么做的用意是什么？我们点开<code>@SpringBootApplication</code>注解慢慢分析</p>
+<p>1:首先打开@SpringBootApplication注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan(excludeFilters = &#123; @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),</span></span><br><span class="line"><span class="meta">      @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前四个为元注解 (点击标题元数据与元注解查看详情)</p>
+<p>@SpringBootConfiguration:是spring的@Configuration注解  表明该注解为标注配置类                                                                                     </p>
+<p>@EnableAutoConfiguration:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import(AutoConfigurationImportSelector.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration                                                       </span><br></pre></td></tr></table></figure>
+
+<p>​             </p>
+<p>​    @AutoConfigurationPackage:点进该注解:——————-&gt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Import(AutoConfigurationPackages.Registrar.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoConfigurationPackage</span><br></pre></td></tr></table></figure>
+
+<p>​    —————–&gt;在点进Register，这是一个静态内部类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Registrar</span> <span class="keyword">implements</span> <span class="title">ImportBeanDefinitionRegistrar</span>, <span class="title">DeterminableImports</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(AnnotationMetadata metadata, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">      register(registry, <span class="keyword">new</span> PackageImports(metadata).getPackageNames().toArray(<span class="keyword">new</span> String[<span class="number">0</span>]));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Set&lt;Object&gt; <span class="title">determineImports</span><span class="params">(AnnotationMetadata metadata)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> Collections.singleton(<span class="keyword">new</span> PackageImports(metadata));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<pre><code>          PackageImports(metadata).getPackageNames()得到就是我们启动类(Spring Boot主配置类)所在的包名                                                 @AutoConfigurationPackage注解的作用就是将主配置类所在的包作为自动配置包进行管理                                                                       register(registry, new PackageImports(metadata).getPackageNames().toArray(new String[0]))</code></pre>
+<p>​    @Import(AutoConfigurationImportSelector.class):该注解的作用就是导入一个类到IOC容器，我们先来看一下导入的这个类：自动配置导入选择器 源码里有一个方法<code>selectImports</code>，选择导入</p>
+<p>@ComponentScan:</p>
+<p>这个注解也是Spring中的，它用来将指定包下需要装配的组件注册到容器中</p>
+<p>2:点开注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootConfiguration&#123;.........&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="Java-SE-EE"><a href="#Java-SE-EE" class="headerlink" title="Java SE/EE"></a>Java SE/EE</h3><p>1:Java SE(J2SE)  java standard Edition</p>
+<p>通常是指Java Standard Edition，Java标准版，就是一般Java程序的开发就可以(如桌面程序)，可以看作是JavaEE的子集。它允许开发和部署在桌面、服务器、嵌入式环境和实施环境中使用的Java应用程序。JavaSE 包括支持Java　Ｗeb服务开发的类，并为Java Platform,Enterprise Edition(Java EE)提供基础。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase.jpg"></h3><p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase2.gif"></p>
+<p>2:JAVA EE java  enterprise edition</p>
+<p>Java企业版，多用于企业级开发，包括web开发等等。企业版本帮助开发和部署可移植、健壮、可伸缩切安全的服务端Java应用。Java EE是在JavaSE的基础上构建的他提供Web 服务、组建模型、管理和通信API.可以用来实现企业级的面向服务体系结构(service-oriented architecture,SOA)和web2.0应用程序。企业开发传统的框架有SSM和SSH框架</p>
+<p>SSM:springMVC为控制器(controller) ，spring 为事务层(service)， MyBatis 负责持久层（dao）{简化配置,注重注解开发}</p>
+<p>SSH: Struts2为控制器(controller) ，spring 为事务层(service)， hibernate 负责持久层（dao）{注重配置开发,入门较难}</p>
+<p>springboot 横空出世,打破格局</p>
+<p>例如 : 人们常说的SSH =Spring+Struts+Hibernate架构应用整合开发,XML,EJB,WebService,UML/Rose,Ajax,Weblogic,Oracle<br>Java EE 是在 Java SE 的基础上构建的，它提供 Web 服务、组件模型、管理和通信 API，可以用来实现企业级的面向服务体系结构（service-oriented architecture，SOA）和 Web 2.0 应用程序。</p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaee.jpg"></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\Javaee2.gif"></p>
+<p>JavaWeb ：</p>
+<p>例如 :J DBC，JSP，Servlet，JavaBean，Html，JavaScript，Session/Cookie，MVC设计模式，Tomcat，Eclipse+MyEclipse<br>是指使用Java体系开发网站类应用，JSP属于Java Web范畴，JSP可以简单看作是前端页面嵌入Java代码，会被容器编译成Servlet，然后Servlet会输出HTML代码，最终成为我们看到的页面。</p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb1.jpg"></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb2.gif"></p>
+<p>原文地址:<a href="https://blog.csdn.net/weixin_39297312/article/details/79454642">https://blog.csdn.net/weixin_39297312/article/details/79454642</a></p>
+<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p>java框架就是一些类和接口的集合，通过这些类和接口协调来完成一系列的程序实现。JAVA框架可以分为三层：表示层，业务层和物理层。框架又叫做开发中的半成品，它不能提供整个WEB应用程序的所有东西，但是有了框架，我们就可以集中精力进行业务逻辑的开发而不用去关心它的技术实现以及一些辅助的业务逻辑。大家熟知的Structs和Spring就是表示层和业务层框架的强力代表。</p>
+<h3 id="元数据与元注解"><a href="#元数据与元注解" class="headerlink" title="元数据与元注解"></a>元数据与元注解</h3><p>1.1:元数据MetaDate</p>
+<p>​       任何文件系统中的数据分为数据和元数据。数据是指普通文件中的实际数据，而元数据指用来描述一个文件的特征的系统数据，诸如访问权限、文件拥有者以及文件数据块的分布信息(inode…)等等。在集群文件系统中，分布信息包括文件在磁盘上的位置以及磁盘在集群中的位置。用户需要操作一个文件必须首先得到它的元数据，才能定位到文件的位置并且得到文件的内容或相关属性</p>
+<p>元数据（Meta Date），关于数据的数据或者叫做用来描述数据的数据或者叫做信息的信息。<br>       这些定义都很是抽象，我们可以把元数据简单的理解成，最小的数据单位。元数据可以为数据说明其元素或属性（名称、大小、数据类型、等），或其结构（长度、字段、数据列），或其相关数据（位于何处、如何联系、拥有者）。</p>
+<pre><code>通常情况下元数据可以分为以下三类：固有性元数据、管理性元数据、描述性元数据。
+    固有性元数据；与事物构成有关的元数据。
+    管理性元数据；与事物处理方式有关的元数据。
+    描述性元数据；与事物本质有关的元数据。
+    当然，并不是说所数据总能清晰的划分在以上3类中。比如：一张由kk拍摄的大小为20K的JPG格式的印着一只小狗的圣诞卡照片。
+  它的固有性元数据包括：20K、JPG；管理性元数据：kent拍摄、圣诞卡；描述性元数据：狗、小狗、圣诞、照片、圣诞节、…
+  但是，圣诞卡则可以放在以上任何一个分类中。与事物构成有关（说明这个东东是什么）、与事物处理方式有关（说明这个东东的用途是什么）、与事物本质有关（可以直接用来描述这个东东）。</code></pre>
+<p>1.2:元数据管理方式</p>
+<p>​       元数据管理有两种方式。集中式管理和分布式管理。集中式管理是指在系统中有一个节点专门司职元数据管理，所有元数据都存储在该节点的存储设备上。所有客户端对文件的请求前，都要先对该元数据管理器请求元数据。分布式管理是指将元数据存放在系统的任意节点并且能动态的迁移。对元数据管理的职责也分布到各个不同的节点上。大多数集群文件系统都采用集中式的元数据管理。因为集中式管理实现简单，一致性维护容易，在一定的操作频繁度内可以提供较满意的性能。缺点是单一失效点问题，若该服务器失效，整个系统将无法正常工作。而且，当对元数据的操作过于频繁时，集中的元数据管理成为整个系统的性能瓶颈。<br>​       分布式元数据管理的好处是解决了集中式管理的单一失效点问题， 而且性能不会随着操作频繁而出现瓶颈。其缺点是，实现复杂，一致性维护复杂，对性能有一定影响。</p>
+<p>元数据的类型</p>
+<p>根据功能可将元数据划分为</p>
+<p>管理型元数据、</p>
+<p>描述型元数据、</p>
+<p>保存型元数据、</p>
+<p>技术型元数据、</p>
+<p>使用型元数据。</p>
+<p>根据结构和语境可将元数据划分为三组：</p>
+<p>第一组为全文索引；</p>
+<p>第二组为简单结构化的普通格式，如DC、RFCl807、Template等；</p>
+<p>第三组为结构复杂的特殊领域内的格式，如FGDC、GILS、TEI、EAD等。</p>
+<p>　　根据元数据的应用范围，可分为</p>
+<p>通用性元数据、</p>
+<p>专业性元数据、</p>
+<p>Web元数据、</p>
+<p>多媒体元数据。<br>————————————————<br>原文链接：<a href="https://blog.csdn.net/it_man/java/article/details/8660536">https://blog.csdn.net/it_man/java/article/details/8660536</a></p>
+<p>2.1元注解</p>
+<p>简单来看一下springboot中元注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br></pre></td></tr></table></figure>
+
+<p>@Target:注解的作用目标</p>
+<p>　　@Target(ElementType.TYPE)——接口、类、枚举、注解<br>　　@Target(ElementType.FIELD)——字段、枚举的常量<br>　　@Target(ElementType.METHOD)——方法<br>　　@Target(ElementType.PARAMETER)——方法参数<br>　　@Target(ElementType.CONSTRUCTOR) ——构造函数<br>　　@Target(ElementType.LOCAL_VARIABLE)——局部变量<br>　　@Target(ElementType.ANNOTATION_TYPE)——注解<br>　　@Target(ElementType.PACKAGE)——包</p>
+<p>@Retention：注解的保留位置</p>
+<p>Retention注解决定注解的生命周期:</p>
+<p>　　RetentionPolicy.SOURCE:这种类型的Annotations只在源代码级别保留,编译时就会被忽略,在class字节码文件中不包含。意思是让被该注解,注解的注解只在java源文件中存在，编译成.class文件后注解就不存在了  —&gt;.java<br>　　RetentionPolicy.CLASS:这种类型的Annotations编译时被保留,默认的保留策略,在class文件中存在,但JVM将会忽略,运行时无法获得。意思是让被该注解,注解的注解在java源文件(.java文件)中存在，编译成.class文件后注解也还存在， ——&gt;.class<br>　　RetentionPolicy.RUNTIME:这种类型的Annotations将被JVM保留,所以他们能在运行时被JVM或其他使用反射机制的代码所读取和使用。生命周期在程序运行时都一直存在  —-&gt;内存中的字节码</p>
+<p>@Document：说明该注解将被包含在javadoc中</p>
+<p>问题产生了,何为javadoc?</p>
+<p>javadoc是Sun公司提供的一个技术，它从程序<a href="https://baike.baidu.com/item/%E6%BA%90%E4%BB%A3%E7%A0%81/3969">源代码</a>中抽取类、方法、成员等注释形成一个和源代码配套的API帮助文档。也就是说，只要在编写程序时以一套特定的标签作注释，在程序编写完成后，通过Javadoc就可以同时形成程序的开发文档了。</p>
+<p>javadoc命令是用来生成自己<a href="https://baike.baidu.com/item/API/10154">API</a>文档的，使用方式：使用命令行在目标文件所在目录输入javadoc +文件名.java。</p>
+<p><strong>javadoc -d D:\doc com.itheima.xxx -encoding utf-8 -charset utf-8</strong></p>
+<p>-d D:\doc 表示：doc文件输入目录为D盘的doc文件夹；</p>
+<p> com.itheima.xxx  表示xxx包中所有类需要生成java doc html文件；</p>
+<p>-encoding utf-8 表示：java代码采用的是utf-8字符编码编写的；</p>
+<p>-charset utf-8 表示：java doc html文件为utf-8字符编码。</p>
+<p>详细信息<a href="https://baike.baidu.com/item/javadoc/4640765?fr=aladdin">https://baike.baidu.com/item/javadoc/4640765?fr=aladdin</a></p>
+<p>@Inherited：说明子类可以继承父类中的该注解</p>
+<p>类继承关系中，子类会继承父类使用的注解中被@Inherited修饰的注解</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 其他篇 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 技能 </tag>
+            
+        </tags>
+        
+    </entry>
+    
   
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/08/05/springcloud天魔大法/">springcloud天魔大法</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">JoyDe</a></p>
-        <p><span>发布时间:</span>2020-08-05, 08:51:16</p>
-        <p><span>最后更新:</span>2020-08-05, 20:54:28</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/08/05/springcloud天魔大法/" title="springcloud天魔大法">http://123.56.249.40/2020/08/05/springcloud天魔大法/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://123.56.249.40/2020/08/05/springcloud天魔大法/　　作者: JoyDe" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"CC BY-NC-SA 4.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
-
-
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/08/07/Hello-My-First-Blog/">
-                    Hello My First Blog
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2020/08/05/springboot九阳神功/">
-                    Springboot九阳神功
-                </a>
-            </div>
-        
-    </nav>
   
-</article>
-<div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#何为springcloud"><span class="toc-number">1.1.</span> <span class="toc-text">何为springcloud?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为何我把springcloud称为天魔大法"><span class="toc-number">1.2.</span> <span class="toc-text">为何我把springcloud称为天魔大法?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何为Eureka"><span class="toc-number">1.3.</span> <span class="toc-text">何为Eureka?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何为负载均衡ribbon"><span class="toc-number">1.4.</span> <span class="toc-text">何为负载均衡ribbon?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何为feign"><span class="toc-number">1.5.</span> <span class="toc-text">何为feign?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feign-超时配置"><span class="toc-number">1.6.</span> <span class="toc-text">Feign-超时配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Feign-日志记录"><span class="toc-number">1.7.</span> <span class="toc-text">Feign-日志记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何为Hystrix-熔断器"><span class="toc-number">1.8.</span> <span class="toc-text">何为Hystrix 熔断器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hystrix-降级-–-服务消费方"><span class="toc-number">1.9.</span> <span class="toc-text">Hystrix 降级 – 服务消费方</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何为gateway网关"><span class="toc-number">1.10.</span> <span class="toc-text">何为gateway网关?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gateway-网关-–-微服务名称配置"><span class="toc-number">1.11.</span> <span class="toc-text">Gateway 网关 – 微服务名称配置</span></a></li></ol></li></ol>
-        
-    </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-6 i,
-        .toc-level-6 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏" title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏", "显示", !!"false"];
-    </script>
-
-
-    <div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></a>
-        </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"springcloud天魔大法　| lqd的个人博客　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
-
-    
-</div>
-
-
-
-    
-
-
-<div class="scroll" id="post-nav-button">
-        
-            <a href="/2020/08/07/Hello-My-First-Blog/" title="上一篇: Hello My First Blog">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2020/08/05/springboot九阳神功/" title="下一篇: Springboot九阳神功">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/Hellow-World/">Hellow World</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/Hello-My-First-Blog/">Hello My First Blog</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/05/springcloud天魔大法/">springcloud天魔大法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/05/springboot九阳神功/">Springboot九阳神功</a></li></ul>
-
-
-    <script>
-        
-    </script></div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="footer-left">
-                <i class="fa fa-copyright"></i> 
-                2017-2020 JoyDe All Rights Reserved.
-            </div>
-            <div class="footer-right">
-                <i class="fa fa-heart animated infinite pulse"></i>Hexo Theme by MOxFIVE<i class="fa fa-heart animated infinite pulse"></i>
-            </div>
-        </div>
-        
-            <div class="visit">
-                
-                    <span id="busuanzi_container_site_pv" style="display:none">
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
-                        </span>
-                    </span>
-                
-                
-                    <span>| </span>
-                
-                
-                    <span id="busuanzi_container_page_pv" style="display:none">
-                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    </span>
-                
-            </div>
-        
-    </div>
-</footer>
-<!--百度自动推送-->
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-<script>
-    $('.chaffle').chaffle();
-</script>
-
-
-<script>
-    var animateList = ['flipInX','flipInY','bounceInLeft','bounceInUp','bounceInDown','rotateIn','fadeInUp','fadeInDown'];
-    var animateIndex = Math.ceil(Math.random() * (animateList.length - 1));
-    $('.article-tlt-a').textillate({
-        initialDelay: 100,
-        in: {
-            effect: 'fadeInDown',
-            delayScale: 1.5,
-            delay: 50,
-            shuffle: true
-        }
-    });
-    $('.article-description-tlt').textillate({
-        initialDelay: 50,
-        in: {
-            effect: 'fadeIn',
-            delayScale: 1.0,
-            delay: 50,
-            shuffle: true
-        }
-    });
-    $('.article-tlt-h').textillate({
-        initialDelay: 100,
-        in: {
-            effect: animateList[animateIndex],
-            delayScale: 2.5,
-            delay: 50,
-            shuffle: true
-        }
-    });
-</script>
-    </div>
-    <script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
-<script>
-        $(document).ready(function() {
-            var iPad = window.navigator.userAgent.indexOf('iPad');
-            if (iPad > -1 || $(".left-col").css("display") === "none") {
-                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
-                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
-                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
-            }
-            else {
-                var backgroundnum = 10;
-                var backgroundimg = "url(//image.joylau.cn/blog/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
-                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
-            }
-        })
-    </script>
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
-</div>
-<script>
-    // Open in New Window
-    
-        var oOpenInNew = {
-            
-            
-             post: ".article-entry a[href], .copyright a[href]", 
-            
-            
-            
-            
-            
-            
-             friends: "#js-friends a", 
-             socail: ".social a" 
-        }
-        for (var x in oOpenInNew) {
-            $(oOpenInNew[x]).attr("target", "_blank");
-        }
-    
-</script>
-
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-  </div>
-</body>
+</search>
