@@ -348,7 +348,6 @@
       
           
         <a id="more"></a>
-
 <h3 id="何为springboot"><a href="#何为springboot" class="headerlink" title="何为springboot?"></a>何为springboot?</h3><p>可以快速搭建spring工程,不是一个新的框架,它只是对spring进行了高度的封装  此框架不需要配置xml，而是依赖于像MAVEN这样的构建系统</p>
 <p>为何我把springboot称为九阳神功?</p>
 <p>springboot:号称java的九阳神功 是因为 只要学会了springboot 学什么武功都快,甚至你都不需要理解真气是如何运行的,你就能释放出武功招式,简单来说,就是你只需要放技能就行了.</p>
@@ -373,49 +372,38 @@
 <p>Spring Boot自动装配原理源码分析</p>
 <p>Spring Boot规定，项目的主配置类必须放在最外层包，也就是说，所有的类都必须放在主配置类的同级包或者子包里，这么做的用意是什么？我们点开<code>@SpringBootApplication</code>注解慢慢分析</p>
 <p>1:首先打开@SpringBootApplication注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan(excludeFilters = &#123; @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),</span></span><br><span class="line"><span class="meta">      @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(excludeFilters = &#123; <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),</span><br><span class="line">      <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;&#125;</span><br></pre></td></tr></table></figure>
 <p>前四个为元注解 (点击标题元数据与元注解查看详情)</p>
 <p>@SpringBootConfiguration:是spring的@Configuration注解  表明该注解为标注配置类                                                                                     </p>
 <p>@EnableAutoConfiguration:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import(AutoConfigurationImportSelector.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration                                                       </span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import</span>(AutoConfigurationImportSelector.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration</span><br></pre></td></tr></table></figure>
 <p>​             </p>
 <p>​    @AutoConfigurationPackage:点进该注解:——————-&gt;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Import(AutoConfigurationPackages.Registrar.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoConfigurationPackage</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Import</span>(AutoConfigurationPackages.Registrar.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoConfigurationPackage</span><br></pre></td></tr></table></figure>
 <p>​    —————–&gt;在点进Register，这是一个静态内部类</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Registrar</span> <span class="keyword">implements</span> <span class="title">ImportBeanDefinitionRegistrar</span>, <span class="title">DeterminableImports</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(AnnotationMetadata metadata, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">      register(registry, <span class="keyword">new</span> PackageImports(metadata).getPackageNames().toArray(<span class="keyword">new</span> String[<span class="number">0</span>]));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Set&lt;Object&gt; <span class="title">determineImports</span><span class="params">(AnnotationMetadata metadata)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> Collections.singleton(<span class="keyword">new</span> PackageImports(metadata));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<pre><code>          PackageImports(metadata).getPackageNames()得到就是我们启动类(Spring Boot主配置类)所在的包名                                                 @AutoConfigurationPackage注解的作用就是将主配置类所在的包作为自动配置包进行管理                                                                       register(registry, new PackageImports(metadata).getPackageNames().toArray(new String[0]))</code></pre>
-<p>​    @Import(AutoConfigurationImportSelector.class):该注解的作用就是导入一个类到IOC容器，我们先来看一下导入的这个类：自动配置导入选择器 源码里有一个方法<code>selectImports</code>，选择导入</p>
+<pre><code>PackageImports(metadata).getPackageNames()得到就是我们启动类(Spring Boot主配置类)所在的包名                                                 @AutoConfigurationPackage注解的作用就是将主配置类所在的包作为自动配置包进行管理                                                                       register(registry, new PackageImports(metadata).getPackageNames().toArray(new String[0]))
+</code></pre><p>​    @Import(AutoConfigurationImportSelector.class):该注解的作用就是导入一个类到IOC容器，我们先来看一下导入的这个类：自动配置导入选择器 源码里有一个方法<code>selectImports</code>，选择导入</p>
 <p>@ComponentScan:</p>
 <p>这个注解也是Spring中的，它用来将指定包下需要装配的组件注册到容器中</p>
 <p>2:点开注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootConfiguration&#123;.........&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootConfiguration&#123;.........&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Java-SE-EE"><a href="#Java-SE-EE" class="headerlink" title="Java SE/EE"></a>Java SE/EE</h3><p>1:Java SE(J2SE)  java standard Edition</p>
 <p>通常是指Java Standard Edition，Java标准版，就是一般Java程序的开发就可以(如桌面程序)，可以看作是JavaEE的子集。它允许开发和部署在桌面、服务器、嵌入式环境和实施环境中使用的Java应用程序。JavaSE 包括支持Java　Ｗeb服务开发的类，并为Java Platform,Enterprise Edition(Java EE)提供基础。</p>
-<h3 id><a href="#" class="headerlink" title></a><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase.jpg"></h3><p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase2.gif"></p>
+<h3 id><a href="#" class="headerlink" title></a><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase.jpg" alt></h3><p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase2.gif" alt></p>
 <p>2:JAVA EE java  enterprise edition</p>
 <p>Java企业版，多用于企业级开发，包括web开发等等。企业版本帮助开发和部署可移植、健壮、可伸缩切安全的服务端Java应用。Java EE是在JavaSE的基础上构建的他提供Web 服务、组建模型、管理和通信API.可以用来实现企业级的面向服务体系结构(service-oriented architecture,SOA)和web2.0应用程序。企业开发传统的框架有SSM和SSH框架</p>
 <p>SSM:springMVC为控制器(controller) ，spring 为事务层(service)， MyBatis 负责持久层（dao）{简化配置,注重注解开发}</p>
 <p>SSH: Struts2为控制器(controller) ，spring 为事务层(service)， hibernate 负责持久层（dao）{注重配置开发,入门较难}</p>
 <p>springboot 横空出世,打破格局</p>
 <p>例如 : 人们常说的SSH =Spring+Struts+Hibernate架构应用整合开发,XML,EJB,WebService,UML/Rose,Ajax,Weblogic,Oracle<br>Java EE 是在 Java SE 的基础上构建的，它提供 Web 服务、组件模型、管理和通信 API，可以用来实现企业级的面向服务体系结构（service-oriented architecture，SOA）和 Web 2.0 应用程序。</p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaee.jpg"></p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\Javaee2.gif"></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaee.jpg" alt></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\Javaee2.gif" alt></p>
 <p>JavaWeb ：</p>
 <p>例如 :J DBC，JSP，Servlet，JavaBean，Html，JavaScript，Session/Cookie，MVC设计模式，Tomcat，Eclipse+MyEclipse<br>是指使用Java体系开发网站类应用，JSP属于Java Web范畴，JSP可以简单看作是前端页面嵌入Java代码，会被容器编译成Servlet，然后Servlet会输出HTML代码，最终成为我们看到的页面。</p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb1.jpg"></p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb2.gif"></p>
-<p>原文地址:<a href="https://blog.csdn.net/weixin_39297312/article/details/79454642">https://blog.csdn.net/weixin_39297312/article/details/79454642</a></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb1.jpg" alt></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb2.gif" alt></p>
+<p>原文地址:<a href="https://blog.csdn.net/weixin_39297312/article/details/79454642" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39297312/article/details/79454642</a></p>
 <h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p>java框架就是一些类和接口的集合，通过这些类和接口协调来完成一系列的程序实现。JAVA框架可以分为三层：表示层，业务层和物理层。框架又叫做开发中的半成品，它不能提供整个WEB应用程序的所有东西，但是有了框架，我们就可以集中精力进行业务逻辑的开发而不用去关心它的技术实现以及一些辅助的业务逻辑。大家熟知的Structs和Spring就是表示层和业务层框架的强力代表。</p>
 <h3 id="元数据与元注解"><a href="#元数据与元注解" class="headerlink" title="元数据与元注解"></a>元数据与元注解</h3><p>1.1:元数据MetaDate</p>
 <p>​       任何文件系统中的数据分为数据和元数据。数据是指普通文件中的实际数据，而元数据指用来描述一个文件的特征的系统数据，诸如访问权限、文件拥有者以及文件数据块的分布信息(inode…)等等。在集群文件系统中，分布信息包括文件在磁盘上的位置以及磁盘在集群中的位置。用户需要操作一个文件必须首先得到它的元数据，才能定位到文件的位置并且得到文件的内容或相关属性</p>
@@ -426,8 +414,8 @@
     描述性元数据；与事物本质有关的元数据。
     当然，并不是说所数据总能清晰的划分在以上3类中。比如：一张由kk拍摄的大小为20K的JPG格式的印着一只小狗的圣诞卡照片。
   它的固有性元数据包括：20K、JPG；管理性元数据：kent拍摄、圣诞卡；描述性元数据：狗、小狗、圣诞、照片、圣诞节、…
-  但是，圣诞卡则可以放在以上任何一个分类中。与事物构成有关（说明这个东东是什么）、与事物处理方式有关（说明这个东东的用途是什么）、与事物本质有关（可以直接用来描述这个东东）。</code></pre>
-<p>1.2:元数据管理方式</p>
+  但是，圣诞卡则可以放在以上任何一个分类中。与事物构成有关（说明这个东东是什么）、与事物处理方式有关（说明这个东东的用途是什么）、与事物本质有关（可以直接用来描述这个东东）。
+</code></pre><p>1.2:元数据管理方式</p>
 <p>​       元数据管理有两种方式。集中式管理和分布式管理。集中式管理是指在系统中有一个节点专门司职元数据管理，所有元数据都存储在该节点的存储设备上。所有客户端对文件的请求前，都要先对该元数据管理器请求元数据。分布式管理是指将元数据存放在系统的任意节点并且能动态的迁移。对元数据管理的职责也分布到各个不同的节点上。大多数集群文件系统都采用集中式的元数据管理。因为集中式管理实现简单，一致性维护容易，在一定的操作频繁度内可以提供较满意的性能。缺点是单一失效点问题，若该服务器失效，整个系统将无法正常工作。而且，当对元数据的操作过于频繁时，集中的元数据管理成为整个系统的性能瓶颈。<br>​       分布式元数据管理的好处是解决了集中式管理的单一失效点问题， 而且性能不会随着操作频繁而出现瓶颈。其缺点是，实现复杂，一致性维护复杂，对性能有一定影响。</p>
 <p>元数据的类型</p>
 <p>根据功能可将元数据划分为</p>
@@ -444,11 +432,10 @@
 <p>通用性元数据、</p>
 <p>专业性元数据、</p>
 <p>Web元数据、</p>
-<p>多媒体元数据。<br>————————————————<br>原文链接：<a href="https://blog.csdn.net/it_man/java/article/details/8660536">https://blog.csdn.net/it_man/java/article/details/8660536</a></p>
+<p>多媒体元数据。<br>————————————————<br>原文链接：<a href="https://blog.csdn.net/it_man/java/article/details/8660536" target="_blank" rel="noopener">https://blog.csdn.net/it_man/java/article/details/8660536</a></p>
 <p>2.1元注解</p>
 <p>简单来看一下springboot中元注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br></pre></td></tr></table></figure>
 <p>@Target:注解的作用目标</p>
 <p>　　@Target(ElementType.TYPE)——接口、类、枚举、注解<br>　　@Target(ElementType.FIELD)——字段、枚举的常量<br>　　@Target(ElementType.METHOD)——方法<br>　　@Target(ElementType.PARAMETER)——方法参数<br>　　@Target(ElementType.CONSTRUCTOR) ——构造函数<br>　　@Target(ElementType.LOCAL_VARIABLE)——局部变量<br>　　@Target(ElementType.ANNOTATION_TYPE)——注解<br>　　@Target(ElementType.PACKAGE)——包</p>
 <p>@Retention：注解的保留位置</p>
@@ -456,17 +443,16 @@
 <p>　　RetentionPolicy.SOURCE:这种类型的Annotations只在源代码级别保留,编译时就会被忽略,在class字节码文件中不包含。意思是让被该注解,注解的注解只在java源文件中存在，编译成.class文件后注解就不存在了  —&gt;.java<br>　　RetentionPolicy.CLASS:这种类型的Annotations编译时被保留,默认的保留策略,在class文件中存在,但JVM将会忽略,运行时无法获得。意思是让被该注解,注解的注解在java源文件(.java文件)中存在，编译成.class文件后注解也还存在， ——&gt;.class<br>　　RetentionPolicy.RUNTIME:这种类型的Annotations将被JVM保留,所以他们能在运行时被JVM或其他使用反射机制的代码所读取和使用。生命周期在程序运行时都一直存在  —-&gt;内存中的字节码</p>
 <p>@Document：说明该注解将被包含在javadoc中</p>
 <p>问题产生了,何为javadoc?</p>
-<p>javadoc是Sun公司提供的一个技术，它从程序<a href="https://baike.baidu.com/item/%E6%BA%90%E4%BB%A3%E7%A0%81/3969">源代码</a>中抽取类、方法、成员等注释形成一个和源代码配套的API帮助文档。也就是说，只要在编写程序时以一套特定的标签作注释，在程序编写完成后，通过Javadoc就可以同时形成程序的开发文档了。</p>
-<p>javadoc命令是用来生成自己<a href="https://baike.baidu.com/item/API/10154">API</a>文档的，使用方式：使用命令行在目标文件所在目录输入javadoc +文件名.java。</p>
+<p>javadoc是Sun公司提供的一个技术，它从程序<a href="https://baike.baidu.com/item/%E6%BA%90%E4%BB%A3%E7%A0%81/3969" target="_blank" rel="noopener">源代码</a>中抽取类、方法、成员等注释形成一个和源代码配套的API帮助文档。也就是说，只要在编写程序时以一套特定的标签作注释，在程序编写完成后，通过Javadoc就可以同时形成程序的开发文档了。</p>
+<p>javadoc命令是用来生成自己<a href="https://baike.baidu.com/item/API/10154" target="_blank" rel="noopener">API</a>文档的，使用方式：使用命令行在目标文件所在目录输入javadoc +文件名.java。</p>
 <p><strong>javadoc -d D:\doc com.itheima.xxx -encoding utf-8 -charset utf-8</strong></p>
 <p>-d D:\doc 表示：doc文件输入目录为D盘的doc文件夹；</p>
 <p> com.itheima.xxx  表示xxx包中所有类需要生成java doc html文件；</p>
 <p>-encoding utf-8 表示：java代码采用的是utf-8字符编码编写的；</p>
 <p>-charset utf-8 表示：java doc html文件为utf-8字符编码。</p>
-<p>详细信息<a href="https://baike.baidu.com/item/javadoc/4640765?fr=aladdin">https://baike.baidu.com/item/javadoc/4640765?fr=aladdin</a></p>
+<p>详细信息<a href="https://baike.baidu.com/item/javadoc/4640765?fr=aladdin" target="_blank" rel="noopener">https://baike.baidu.com/item/javadoc/4640765?fr=aladdin</a></p>
 <p>@Inherited：说明子类可以继承父类中的该注解</p>
 <p>类继承关系中，子类会继承父类使用的注解中被@Inherited修饰的注解</p>
-
       
     </div>
     
@@ -492,11 +478,17 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/08/07/Hello-My-First-Blog/">
+                    Hello My First Blog
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
                 <a href="/2020/08/05/springcloud天魔大法/">
                     springcloud天魔大法
                 </a>
             </div>
-        
         
     </nav>
   
@@ -552,7 +544,7 @@
 
 <div class="scroll" id="post-nav-button">
         
-            <a href="/2020/08/05/springcloud天魔大法/" title="上一篇: springcloud天魔大法">
+            <a href="/2020/08/07/Hello-My-First-Blog/" title="上一篇: Hello My First Blog">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -560,11 +552,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2020/08/05/springcloud天魔大法/" title="下一篇: springcloud天魔大法">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/Hellow-World/">Hellow World</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/Hello-My-First-Blog/">Hello My First Blog</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/05/springcloud天魔大法/">springcloud天魔大法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/05/springboot九阳神功/">Springboot九阳神功</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/08/08/Hello-My-Second-Blog/">Hello My Second Blog</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/Hellow-World/">Hellow World</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/07/Hello-My-First-Blog/">Hello My First Blog</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/05/springboot九阳神功/">Springboot九阳神功</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/05/springcloud天魔大法/">springcloud天魔大法</a></li></ul>
 
 
     <script>

@@ -4,6 +4,14 @@
   
     
     <entry>
+      <title><![CDATA[Hello My Second Blog]]></title>
+      <url>http://123.56.249.40/2020/08/08/Hello-My-Second-Blog/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hellow World]]></title>
       <url>http://123.56.249.40/2020/08/07/Hellow-World/</url>
       <content type="html"></content>
@@ -20,15 +28,140 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Springboot九阳神功]]></title>
+      <url>http://123.56.249.40/2020/08/05/springboot%E4%B9%9D%E9%98%B3%E7%A5%9E%E5%8A%9F/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
+<h3 id="何为springboot"><a href="#何为springboot" class="headerlink" title="何为springboot?"></a>何为springboot?</h3><p>可以快速搭建spring工程,不是一个新的框架,它只是对spring进行了高度的封装  此框架不需要配置xml，而是依赖于像MAVEN这样的构建系统</p>
+<p>为何我把springboot称为九阳神功?</p>
+<p>springboot:号称java的九阳神功 是因为 只要学会了springboot 学什么武功都快,甚至你都不需要理解真气是如何运行的,你就能释放出武功招式,简单来说,就是你只需要放技能就行了.</p>
+<p>那什么是spring呢 spring是一种service组件(事务):我愿称之为练武的基础—&gt;打通奇经八脉,里面很复杂,正常打通,需要耗时很久.</p>
+<p>Spring是分层的 Java SE/EE(点击Java SE/EE查看详情)应用 full-stack(全栈,个人理解吹一手 全能) 轻量级开源框架(框架 点击目标查看详情)，以 IoC（Inverse Of Control：反转控制）、DI(依赖注入) 和 AOP（Aspect Oriented Programming：面向切面编程）为内核。</p>
+<p>提供了展现层 SpringMVC和  持久层 Spring JDBCTemplate以及业务层事务管理等众多的企业级应用技术，还能整合开源世界众多著名的第三方框架和类库，逐渐成为使用最多的Java EE 企业应用开源框架</p>
+<p>他是怎么做的呢?</p>
+<p>①导入 Spring 开发的基本包坐标  pom 文件 里面<dependencies>  导入每一个我们需要的第三方依赖jar包                                            spring、springmvc、redis、mybaits、log4j、mysql-connector-java 等等相关jar …</dependencies></p>
+<p>②编写 Dao 接口和实现类  根据导入的依赖</p>
+<p>③创建 Spring 核心配置文件  applicationContext*.xml 以及配置web.xml :Listener配置、Filter配置、Servlet配置…….</p>
+<p>④在 Spring 配置文件中配置 ,在applicationContext*.xml 文件中配置数据库连接、配置spring事务,配置视图解析器,开启注解、自动扫描功能,<bean>标签 注入Bean定义 (或者@Component系列注解 )</bean></p>
+<p>⑤使用 Spring 的 API 获得 Bean 实例 例如 JbdcTemplate 的实例来操作数据库</p>
+<p>⑥配置完成后部署tomcat、启动调试</p>
+<p>spring 配合springMVC Mybatis 组成了当下主流的一种SSM框架 完成web开发</p>
+<p>总结一下 繁琐点 </p>
+<p>1:需要导入各种<dependency>  几十多种或以上的第三方依赖jar包 还需要解决各种依赖以及版本的冲突                                                       2:IOC容器中需要我们自己去定义各种<bean>标签  来进行bean定义 以及配置数据库连接、配置spring事务,配置视图解析器,开启注解、自动扫描功能  核心配置xml文件需要大量的编写       以及web.xml文件的编写                                                                                                                       </bean></dependency></p>
+<p>如此看来 如何解决上述两个问题成为简化开发的关键点</p>
+<p>如何解决繁琐的导入依赖? </p>
+<p>springboot :解决问题1,提供了一种起步依赖 起步依赖本质上是一个Maven项目对象模型（Project Object Model，POM），定义了对其他库的传递依赖， 将实现某项功能的全部依赖 聚合为一个一个依赖 spring以starter 命名</p>
+<p>springboot自动装配:Spring Boot的自动配置是一个运行时（更准确地说，是应用程序启动时）的过程，考虑了众多因素，才决定Spring配置应该用哪个，不该用哪个。该过程是SpringBoot自动完成的。导入的起步依赖jar中已经定义好了,直接使用就可以</p>
+<p>springboot:还额外提供了一些辅助功能,例如嵌入式服务器 例如tomcat 也就无需在pom文件中导入tomcat插件.以psvm 就可以启动项目了.</p>
+<p>Spring Boot自动装配原理源码分析</p>
+<p>Spring Boot规定，项目的主配置类必须放在最外层包，也就是说，所有的类都必须放在主配置类的同级包或者子包里，这么做的用意是什么？我们点开<code>@SpringBootApplication</code>注解慢慢分析</p>
+<p>1:首先打开@SpringBootApplication注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(excludeFilters = &#123; <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),</span><br><span class="line">      <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>前四个为元注解 (点击标题元数据与元注解查看详情)</p>
+<p>@SpringBootConfiguration:是spring的@Configuration注解  表明该注解为标注配置类                                                                                     </p>
+<p>@EnableAutoConfiguration:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import</span>(AutoConfigurationImportSelector.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration</span><br></pre></td></tr></table></figure>
+<p>​             </p>
+<p>​    @AutoConfigurationPackage:点进该注解:——————-&gt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Import</span>(AutoConfigurationPackages.Registrar.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoConfigurationPackage</span><br></pre></td></tr></table></figure>
+<p>​    —————–&gt;在点进Register，这是一个静态内部类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Registrar</span> <span class="keyword">implements</span> <span class="title">ImportBeanDefinitionRegistrar</span>, <span class="title">DeterminableImports</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(AnnotationMetadata metadata, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">      register(registry, <span class="keyword">new</span> PackageImports(metadata).getPackageNames().toArray(<span class="keyword">new</span> String[<span class="number">0</span>]));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Set&lt;Object&gt; <span class="title">determineImports</span><span class="params">(AnnotationMetadata metadata)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> Collections.singleton(<span class="keyword">new</span> PackageImports(metadata));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>PackageImports(metadata).getPackageNames()得到就是我们启动类(Spring Boot主配置类)所在的包名                                                 @AutoConfigurationPackage注解的作用就是将主配置类所在的包作为自动配置包进行管理                                                                       register(registry, new PackageImports(metadata).getPackageNames().toArray(new String[0]))
+</code></pre><p>​    @Import(AutoConfigurationImportSelector.class):该注解的作用就是导入一个类到IOC容器，我们先来看一下导入的这个类：自动配置导入选择器 源码里有一个方法<code>selectImports</code>，选择导入</p>
+<p>@ComponentScan:</p>
+<p>这个注解也是Spring中的，它用来将指定包下需要装配的组件注册到容器中</p>
+<p>2:点开注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootConfiguration&#123;.........&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Java-SE-EE"><a href="#Java-SE-EE" class="headerlink" title="Java SE/EE"></a>Java SE/EE</h3><p>1:Java SE(J2SE)  java standard Edition</p>
+<p>通常是指Java Standard Edition，Java标准版，就是一般Java程序的开发就可以(如桌面程序)，可以看作是JavaEE的子集。它允许开发和部署在桌面、服务器、嵌入式环境和实施环境中使用的Java应用程序。JavaSE 包括支持Java　Ｗeb服务开发的类，并为Java Platform,Enterprise Edition(Java EE)提供基础。</p>
+<h3 id><a href="#" class="headerlink" title></a><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase.jpg" alt></h3><p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase2.gif" alt></p>
+<p>2:JAVA EE java  enterprise edition</p>
+<p>Java企业版，多用于企业级开发，包括web开发等等。企业版本帮助开发和部署可移植、健壮、可伸缩切安全的服务端Java应用。Java EE是在JavaSE的基础上构建的他提供Web 服务、组建模型、管理和通信API.可以用来实现企业级的面向服务体系结构(service-oriented architecture,SOA)和web2.0应用程序。企业开发传统的框架有SSM和SSH框架</p>
+<p>SSM:springMVC为控制器(controller) ，spring 为事务层(service)， MyBatis 负责持久层（dao）{简化配置,注重注解开发}</p>
+<p>SSH: Struts2为控制器(controller) ，spring 为事务层(service)， hibernate 负责持久层（dao）{注重配置开发,入门较难}</p>
+<p>springboot 横空出世,打破格局</p>
+<p>例如 : 人们常说的SSH =Spring+Struts+Hibernate架构应用整合开发,XML,EJB,WebService,UML/Rose,Ajax,Weblogic,Oracle<br>Java EE 是在 Java SE 的基础上构建的，它提供 Web 服务、组件模型、管理和通信 API，可以用来实现企业级的面向服务体系结构（service-oriented architecture，SOA）和 Web 2.0 应用程序。</p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaee.jpg" alt></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\Javaee2.gif" alt></p>
+<p>JavaWeb ：</p>
+<p>例如 :J DBC，JSP，Servlet，JavaBean，Html，JavaScript，Session/Cookie，MVC设计模式，Tomcat，Eclipse+MyEclipse<br>是指使用Java体系开发网站类应用，JSP属于Java Web范畴，JSP可以简单看作是前端页面嵌入Java代码，会被容器编译成Servlet，然后Servlet会输出HTML代码，最终成为我们看到的页面。</p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb1.jpg" alt></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb2.gif" alt></p>
+<p>原文地址:<a href="https://blog.csdn.net/weixin_39297312/article/details/79454642" target="_blank" rel="noopener">https://blog.csdn.net/weixin_39297312/article/details/79454642</a></p>
+<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p>java框架就是一些类和接口的集合，通过这些类和接口协调来完成一系列的程序实现。JAVA框架可以分为三层：表示层，业务层和物理层。框架又叫做开发中的半成品，它不能提供整个WEB应用程序的所有东西，但是有了框架，我们就可以集中精力进行业务逻辑的开发而不用去关心它的技术实现以及一些辅助的业务逻辑。大家熟知的Structs和Spring就是表示层和业务层框架的强力代表。</p>
+<h3 id="元数据与元注解"><a href="#元数据与元注解" class="headerlink" title="元数据与元注解"></a>元数据与元注解</h3><p>1.1:元数据MetaDate</p>
+<p>​       任何文件系统中的数据分为数据和元数据。数据是指普通文件中的实际数据，而元数据指用来描述一个文件的特征的系统数据，诸如访问权限、文件拥有者以及文件数据块的分布信息(inode…)等等。在集群文件系统中，分布信息包括文件在磁盘上的位置以及磁盘在集群中的位置。用户需要操作一个文件必须首先得到它的元数据，才能定位到文件的位置并且得到文件的内容或相关属性</p>
+<p>元数据（Meta Date），关于数据的数据或者叫做用来描述数据的数据或者叫做信息的信息。<br>       这些定义都很是抽象，我们可以把元数据简单的理解成，最小的数据单位。元数据可以为数据说明其元素或属性（名称、大小、数据类型、等），或其结构（长度、字段、数据列），或其相关数据（位于何处、如何联系、拥有者）。</p>
+<pre><code>通常情况下元数据可以分为以下三类：固有性元数据、管理性元数据、描述性元数据。
+    固有性元数据；与事物构成有关的元数据。
+    管理性元数据；与事物处理方式有关的元数据。
+    描述性元数据；与事物本质有关的元数据。
+    当然，并不是说所数据总能清晰的划分在以上3类中。比如：一张由kk拍摄的大小为20K的JPG格式的印着一只小狗的圣诞卡照片。
+  它的固有性元数据包括：20K、JPG；管理性元数据：kent拍摄、圣诞卡；描述性元数据：狗、小狗、圣诞、照片、圣诞节、…
+  但是，圣诞卡则可以放在以上任何一个分类中。与事物构成有关（说明这个东东是什么）、与事物处理方式有关（说明这个东东的用途是什么）、与事物本质有关（可以直接用来描述这个东东）。
+</code></pre><p>1.2:元数据管理方式</p>
+<p>​       元数据管理有两种方式。集中式管理和分布式管理。集中式管理是指在系统中有一个节点专门司职元数据管理，所有元数据都存储在该节点的存储设备上。所有客户端对文件的请求前，都要先对该元数据管理器请求元数据。分布式管理是指将元数据存放在系统的任意节点并且能动态的迁移。对元数据管理的职责也分布到各个不同的节点上。大多数集群文件系统都采用集中式的元数据管理。因为集中式管理实现简单，一致性维护容易，在一定的操作频繁度内可以提供较满意的性能。缺点是单一失效点问题，若该服务器失效，整个系统将无法正常工作。而且，当对元数据的操作过于频繁时，集中的元数据管理成为整个系统的性能瓶颈。<br>​       分布式元数据管理的好处是解决了集中式管理的单一失效点问题， 而且性能不会随着操作频繁而出现瓶颈。其缺点是，实现复杂，一致性维护复杂，对性能有一定影响。</p>
+<p>元数据的类型</p>
+<p>根据功能可将元数据划分为</p>
+<p>管理型元数据、</p>
+<p>描述型元数据、</p>
+<p>保存型元数据、</p>
+<p>技术型元数据、</p>
+<p>使用型元数据。</p>
+<p>根据结构和语境可将元数据划分为三组：</p>
+<p>第一组为全文索引；</p>
+<p>第二组为简单结构化的普通格式，如DC、RFCl807、Template等；</p>
+<p>第三组为结构复杂的特殊领域内的格式，如FGDC、GILS、TEI、EAD等。</p>
+<p>　　根据元数据的应用范围，可分为</p>
+<p>通用性元数据、</p>
+<p>专业性元数据、</p>
+<p>Web元数据、</p>
+<p>多媒体元数据。<br>————————————————<br>原文链接：<a href="https://blog.csdn.net/it_man/java/article/details/8660536" target="_blank" rel="noopener">https://blog.csdn.net/it_man/java/article/details/8660536</a></p>
+<p>2.1元注解</p>
+<p>简单来看一下springboot中元注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br></pre></td></tr></table></figure>
+<p>@Target:注解的作用目标</p>
+<p>　　@Target(ElementType.TYPE)——接口、类、枚举、注解<br>　　@Target(ElementType.FIELD)——字段、枚举的常量<br>　　@Target(ElementType.METHOD)——方法<br>　　@Target(ElementType.PARAMETER)——方法参数<br>　　@Target(ElementType.CONSTRUCTOR) ——构造函数<br>　　@Target(ElementType.LOCAL_VARIABLE)——局部变量<br>　　@Target(ElementType.ANNOTATION_TYPE)——注解<br>　　@Target(ElementType.PACKAGE)——包</p>
+<p>@Retention：注解的保留位置</p>
+<p>Retention注解决定注解的生命周期:</p>
+<p>　　RetentionPolicy.SOURCE:这种类型的Annotations只在源代码级别保留,编译时就会被忽略,在class字节码文件中不包含。意思是让被该注解,注解的注解只在java源文件中存在，编译成.class文件后注解就不存在了  —&gt;.java<br>　　RetentionPolicy.CLASS:这种类型的Annotations编译时被保留,默认的保留策略,在class文件中存在,但JVM将会忽略,运行时无法获得。意思是让被该注解,注解的注解在java源文件(.java文件)中存在，编译成.class文件后注解也还存在， ——&gt;.class<br>　　RetentionPolicy.RUNTIME:这种类型的Annotations将被JVM保留,所以他们能在运行时被JVM或其他使用反射机制的代码所读取和使用。生命周期在程序运行时都一直存在  —-&gt;内存中的字节码</p>
+<p>@Document：说明该注解将被包含在javadoc中</p>
+<p>问题产生了,何为javadoc?</p>
+<p>javadoc是Sun公司提供的一个技术，它从程序<a href="https://baike.baidu.com/item/%E6%BA%90%E4%BB%A3%E7%A0%81/3969" target="_blank" rel="noopener">源代码</a>中抽取类、方法、成员等注释形成一个和源代码配套的API帮助文档。也就是说，只要在编写程序时以一套特定的标签作注释，在程序编写完成后，通过Javadoc就可以同时形成程序的开发文档了。</p>
+<p>javadoc命令是用来生成自己<a href="https://baike.baidu.com/item/API/10154" target="_blank" rel="noopener">API</a>文档的，使用方式：使用命令行在目标文件所在目录输入javadoc +文件名.java。</p>
+<p><strong>javadoc -d D:\doc com.itheima.xxx -encoding utf-8 -charset utf-8</strong></p>
+<p>-d D:\doc 表示：doc文件输入目录为D盘的doc文件夹；</p>
+<p> com.itheima.xxx  表示xxx包中所有类需要生成java doc html文件；</p>
+<p>-encoding utf-8 表示：java代码采用的是utf-8字符编码编写的；</p>
+<p>-charset utf-8 表示：java doc html文件为utf-8字符编码。</p>
+<p>详细信息<a href="https://baike.baidu.com/item/javadoc/4640765?fr=aladdin" target="_blank" rel="noopener">https://baike.baidu.com/item/javadoc/4640765?fr=aladdin</a></p>
+<p>@Inherited：说明子类可以继承父类中的该注解</p>
+<p>类继承关系中，子类会继承父类使用的注解中被@Inherited修饰的注解</p>]]></content>
+      
+        <categories>
+            
+            <category> 其他篇 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 技能 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[springcloud天魔大法]]></title>
       <url>http://123.56.249.40/2020/08/05/springcloud%E5%A4%A9%E9%AD%94%E5%A4%A7%E6%B3%95/</url>
       <content type="html"><![CDATA[<a id="more"></a>
-
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h3 id="何为springcloud"><a href="#何为springcloud" class="headerlink" title="何为springcloud?"></a>何为springcloud?</h3><hr>
-<p>springcloud: Spring Cloud是一系列框架的有序集合。它利用<a href="https://baike.baidu.com/item/Spring%20Boot/20249767">Spring Boot</a>的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以用Spring Boot的开发风格做到一键启动和部署。Spring Cloud并没有重复制造轮子，它只是将各家公司开发的比较成熟、经得起实际考验的服务框架组合起来，通过Spring Boot风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。</p>
+<p>## </p>
+<h3 id="何为springcloud"><a href="#何为springcloud" class="headerlink" title="何为springcloud?"></a>何为springcloud?</h3><hr>
+<p>springcloud: Spring Cloud是一系列框架的有序集合。它利用<a href="https://baike.baidu.com/item/Spring%20Boot/20249767" target="_blank" rel="noopener">Spring Boot</a>的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以用Spring Boot的开发风格做到一键启动和部署。Spring Cloud并没有重复制造轮子，它只是将各家公司开发的比较成熟、经得起实际考验的服务框架组合起来，通过Spring Boot风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。</p>
 <p>那么问题产生了,什么是分布式系统?</p>
 <hr>
-<p>分布式系统（<em>distributed system</em>）是建立在网络之上的<a href="https://baike.baidu.com/item/%E8%BD%AF%E4%BB%B6">软件</a>系统。正是因为<a href="https://baike.baidu.com/item/%E8%BD%AF%E4%BB%B6/12053">软件</a>的特性，所以分布式系统具有高度的<a href="https://baike.baidu.com/item/%E5%86%85%E8%81%9A%E6%80%A7/4973441">内聚性</a>和透明性。因此，网络和分布式系统之间的区别更多的在于高层<a href="https://baike.baidu.com/item/%E8%BD%AF%E4%BB%B6/12053">软件</a>（特别是<a href="https://baike.baidu.com/item/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/192">操作系统</a>），而不是硬件。</p>
+<p>分布式系统（<em>distributed system</em>）是建立在网络之上的<a href="https://baike.baidu.com/item/%E8%BD%AF%E4%BB%B6" target="_blank" rel="noopener">软件</a>系统。正是因为<a href="https://baike.baidu.com/item/%E8%BD%AF%E4%BB%B6/12053" target="_blank" rel="noopener">软件</a>的特性，所以分布式系统具有高度的<a href="https://baike.baidu.com/item/%E5%86%85%E8%81%9A%E6%80%A7/4973441" target="_blank" rel="noopener">内聚性</a>和透明性。因此，网络和分布式系统之间的区别更多的在于高层<a href="https://baike.baidu.com/item/%E8%BD%AF%E4%BB%B6/12053" target="_blank" rel="noopener">软件</a>（特别是<a href="https://baike.baidu.com/item/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/192" target="_blank" rel="noopener">操作系统</a>），而不是硬件。</p>
 <hr>
 <p>怎么理解? 很多应用(软件,服务)通过<em>分别</em>   <em>部署</em> 的方式运行在不同计算机上 ,这样一组计算机上所用的应用(服务),联合起来就形成了一个完整的系统 就是分布式系统</p>
 <ul>
@@ -52,7 +185,7 @@
 <p>何为服务治理?   注册中心连接客户端(消费者,提供者),用来连接消费方以及提供方,从而实现多种好处,也有许些弊端</p>
 <p>比如(A夜里寂寞 想找个C服务一下 自己去找,首先不好找,有可能找不到,其次就算找到了也可能是有问题的,最后还可能是不安全的   那么这个时候  B公司站了出来 告诉A 我这里有你来联系谁谁谁 谁谁谁帮你联系 安全无缝连接 你来联系我就行   同时C也会来到B这里注册了时间 地点 收费等等信息 这样就比较安全了)</p>
 <h3 id="何为Eureka"><a href="#何为Eureka" class="headerlink" title="何为Eureka?"></a>何为Eureka?</h3><p>Spring Cloud Netflix给我提供的就是自家的服务治理Eureka:</p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\天魔img\Eureka.png"></p>
+<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\天魔img\Eureka.png" alt></p>
 <p>包含两个组件：Eureka Server (注册中心) 和 Eureka Client (服务提供者、服务消费者)。</p>
 <p>注册中心还有有很多种:dobbo—-&gt;zookeeper     consul  nacos 这些都是第三方写好 直接启动就行</p>
 <p>而Eureka Server 则需要我们自己编写</p>
@@ -60,15 +193,12 @@
 <p>2:编写启动类</p>
 <p>3:配置 配置文件  配置那些内容呢?                                                                                                                                                                             3.1   首先,给予tomcat启动端口                                                                                                                                                                                   </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: <span class="number">8761</span></span><br></pre></td></tr></table></figure>
-
 <p>3.2配置Eureka_Server  </p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span> <span class="comment"># 实例</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">localhost</span> <span class="comment"># 主机名</span></span><br><span class="line">  <span class="attr">client:</span> <span class="comment"># 客户端</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://$&#123;eureka.instance.hostname&#125;:$&#123;server.port&#125;/eureka</span> <span class="comment"># eureka服务端地址，将来客户端使用该地址和eureka进行通信</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span> <span class="comment"># 是否将自己的路径 注册到eureka上。eureka server 不需要的，eureka provider client 需要</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">false</span> <span class="comment"># 是否需要从eureka中抓取路径。eureka server 不需要的，eureka consumer client 需要</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">enable-self-preservation:</span> <span class="literal">false</span> <span class="comment"># 关闭自我保护机制</span></span><br><span class="line">    <span class="attr">eviction-interval-timer-in-ms:</span> <span class="number">3000</span> <span class="comment"># 检查服务的时间间隔</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span> <span class="comment"># 实例</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">localhost</span> <span class="comment"># 主机名</span></span><br><span class="line"><span class="attr">  client:</span> <span class="comment"># 客户端</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://$&#123;eureka.instance.hostname&#125;:$&#123;server.port&#125;/eureka</span> <span class="comment"># eureka服务端地址，将来客户端使用该地址和eureka进行通信</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> <span class="comment"># 是否将自己的路径 注册到eureka上。eureka server 不需要的，eureka provider client 需要</span></span><br><span class="line"><span class="attr">    fetch-registry:</span> <span class="literal">false</span> <span class="comment"># 是否需要从eureka中抓取路径。eureka server 不需要的，eureka consumer client 需要</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> <span class="comment"># 关闭自我保护机制</span></span><br><span class="line"><span class="attr">    eviction-interval-timer-in-ms:</span> <span class="number">3000</span> <span class="comment"># 检查服务的时间间隔</span></span><br></pre></td></tr></table></figure>
 <p>​      eureka总属性 内部有三个属性:</p>
 <p>instance:实例 ——&gt;</p>
 <p>实例就是标识你在治理中心中是个什么身份,有个ip或者主机名 知道你在哪  类似给你个会员卡</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">localhost</span> <span class="comment"># 主机名</span></span><br><span class="line">    <span class="attr">prefer-ip-address:</span> <span class="literal">true</span> <span class="comment"># 将当前实例的ip注册到eureka server 中。默认是false 注册主机名</span></span><br><span class="line">    <span class="attr">ip-address:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="comment"># 设置当前实例的ip</span></span><br><span class="line">    <span class="attr">instance-id:</span> <span class="string">$&#123;eureka.instance.ip-address&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span> <span class="comment"># 设置web控制台显示的 实例id</span></span><br><span class="line">    <span class="attr">lease-renewal-interval-in-seconds:</span> <span class="number">3</span> <span class="comment"># 每隔3 秒发一次心跳包</span></span><br><span class="line">    <span class="attr">lease-expiration-duration-in-seconds:</span> <span class="number">9</span> <span class="comment"># 如果9秒没有发心跳包，服务器呀，你把我干掉吧~</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">localhost</span> <span class="comment"># 主机名</span></span><br><span class="line"><span class="attr">    prefer-ip-address:</span> <span class="literal">true</span> <span class="comment"># 将当前实例的ip注册到eureka server 中。默认是false 注册主机名</span></span><br><span class="line"><span class="attr">    ip-address:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="comment"># 设置当前实例的ip</span></span><br><span class="line"><span class="attr">    instance-id:</span> <span class="string">$&#123;eureka.instance.ip-address&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span> <span class="comment"># 设置web控制台显示的 实例id</span></span><br><span class="line"><span class="attr">    lease-renewal-interval-in-seconds:</span> <span class="number">3</span> <span class="comment"># 每隔3 秒发一次心跳包</span></span><br><span class="line"><span class="attr">    lease-expiration-duration-in-seconds:</span> <span class="number">9</span> <span class="comment"># 如果9秒没有发心跳包，服务器呀，你把我干掉吧~</span></span><br></pre></td></tr></table></figure>
 <p>server:服务器 ——-&gt;</p>
 <p>建明制衣 只有是server的组件才有该属性</p>
 <ol>
@@ -77,13 +207,11 @@
 <li>服务器设置了检查应用的时间间隔</li>
 <li>开启保护机制</li>
 </ol>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">enable-self-preservation:</span> <span class="literal">false</span> <span class="comment"># 关闭自我保护机制</span></span><br><span class="line">    <span class="attr">eviction-interval-timer-in-ms:</span> <span class="number">3000</span> <span class="comment"># 检查服务的时间间隔</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> <span class="comment"># 关闭自我保护机制</span></span><br><span class="line"><span class="attr">    eviction-interval-timer-in-ms:</span> <span class="number">3000</span> <span class="comment"># 检查服务的时间间隔</span></span><br></pre></td></tr></table></figure>
 <p>  client:客户端————-&gt;</p>
 <p>建明制衣 只有是client的组件才有该属性 provider 和 consumer</p>
 <p>以provider举例</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8082</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">localhost</span> <span class="comment"># 主机名</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8761/eureka,http://eureka-server2:8762/eureka</span> <span class="comment"># eureka服务端地址，将来客户端使用该地址和eureka进行通信</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">eureka-producer</span> <span class="comment"># 设置当前应用的名称。将来会在eureka中Application显示。将来需要使用该名称来获取路径</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8082</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">localhost</span> <span class="comment"># 主机名</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka,http://eureka-server2:8762/eureka</span> <span class="comment"># eureka服务端地址，将来客户端使用该地址和eureka进行通信</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-producer</span> <span class="comment"># 设置当前应用的名称。将来会在eureka中Application显示。将来需要使用该名称来获取路径</span></span><br></pre></td></tr></table></figure>
 <p>server.port启动端口  由于是客户端使用eureka.client 属性 需要注册中心的地址 去寻找服务(或者提供)  </p>
 <p>5.保护机制的目的</p>
 <ol>
@@ -96,7 +224,6 @@
 <p>第一步引入依赖:首先父工程已经引入了spring-boot-starter-parent依赖,规定了版本 以及spring-cloud-dependencies依赖                   接下来,在子模块中我们还要引入soring-boot-starter-web和spring-cloud-starter-netflix-eureka-client两个依赖 前者提供web服务,后者是eureka 客户端依赖</p>
 <p>第二步:编写启动类ProdiverApplication</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br></pre></td></tr></table></figure>
-
 <p>两个注解一个是启动类注解 还有一个启用客户端注解 服务端启动注解就是@EnableEurekaServer</p>
 <p>第三步:完成业务代码,controller—&gt;service—–&gt;dao</p>
 <p>第四步:编写配置文件(那么说起配置,就不得不谈 springboot为何能简化开发,重要的一点就是它基于约定大于配置</p>
@@ -104,7 +231,6 @@
 <p>那么还有哪些配置是springboot没有帮我们配置好的,需要去指定的呢?看项目需求</p>
 <p>此处的Provider需要我们去 server服务器注册 首先需要tomcat来启动项目  tomcat springboot已经提供好了 我们只需要提供一个端口号即可 其次需要提供一个是自己的http地址去登记  还有一个去哪里登记server的http地址 </p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: <span class="number">8082</span></span><br><span class="line"></span><br><span class="line">eureka:</span><br><span class="line">  instance:</span><br><span class="line">    hostname: localhost # 主机名</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http:<span class="comment">//localhost:8761/eureka,http://eureka-server2:8762/eureka # eureka服务端地址，将来客户端使用该地址和eureka进行通信</span></span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: eureka-producer # 设置当前应用的名称。将来会在eureka中Application显示。将来需要使用该名称来获取路径</span><br></pre></td></tr></table></figure>
-
 <p>provider属于client 所以eureka属性需要设为client  里面需要提供server的地址来提供服务 和单一的server不同的是,他需要一个名字  为了确保唯一性 我建议理解成身份证号码 你去注册服务提供身份证 从而绑定一张提供信息卡(instance实例)</p>
 <p>所以这个名字怎么给呢:spring.application.name :xxxxx</p>
 <p>这样呢 server服务器上就有了一个叫xxxxx的信息卡 里面提供服务的地址 完成提供服务注册</p>
@@ -112,19 +238,12 @@
 <p>第一步引入依赖:首先父工程已经引入了spring-boot-starter-parent依赖,规定了版本 以及spring-cloud-dependencies依赖                   接下来,在子模块中我们还要引入soring-boot-starter-web和spring-cloud-starter-netflix-eureka-client两个依赖 前者提供web服务,后者是eureka 客户端依赖</p>
 <p>第二步:编写启动类ConsumerApplication</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsumerApplication</span></span></span><br></pre></td></tr></table></figure>
-
 <p>第三步:编写业务代码 由于是去调用服务,此处只需要编写controller层代码即可,那么怎么去调用provider提供的服务呢?</p>
 <p>provider以及consumer 通过使用 RestTemplate 完成远程调用。</p>
 <p>那么何为 RestTemplate? 继承了拦截Http访问器, 休息行动</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RestTemplate</span> <span class="keyword">extends</span> <span class="title">InterceptingHttpAccessor</span> <span class="keyword">implements</span> <span class="title">RestOperations</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> romePresent;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> jaxb2Present;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> jackson2Present;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> jackson2XmlPresent;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> jackson2SmilePresent;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> jackson2CborPresent;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> gsonPresent;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> jsonbPresent;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;HttpMessageConverter&lt;?&gt;&gt; messageConverters;</span><br><span class="line">    <span class="keyword">private</span> ResponseErrorHandler errorHandler;</span><br><span class="line">    <span class="keyword">private</span> UriTemplateHandler uriTemplateHandler;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ResponseExtractor&lt;HttpHeaders&gt; headersExtractor;</span><br><span class="line">    ...............</span><br></pre></td></tr></table></figure>
-
-
-
 <p>RestTemplate类是spring-web模块中进行HTTP访问的REST客户端核心类。RestTemplate请求使用阻塞式IO，适合低并发的应用场景。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">\1. RestTemplate类提供了3个构造函数</span><br><span class="line"></span><br><span class="line">RestTemplate()</span><br><span class="line">RestTemplate(ClientHttpRequestFactory requestFactory)</span><br><span class="line">org.springframework.http.client.ClientHttpRequestFactory接口的实现类给出底层实现的第三方HTTP客户端软件。</span><br><span class="line"></span><br><span class="line">RestTemplate(java.util.List&lt;HttpMessageConverter&lt;?&gt;&gt; messageConverters)</span><br><span class="line">org.springframework.http.converter.HttpMessageConverter接口的实现对象能够在HTTP消息与Java POJO之间进行数据转换。</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">\2. RestTemplate类能够以多种HTTP的方法，如GET, POST, PUT, DELETE, HEAD, OPTIONS等，向服务器发起HTTP请求。</span><br><span class="line"></span><br><span class="line">2.1 GET请求的方法</span><br><span class="line"></span><br><span class="line">getForObject(String, ResponseClass, Object[])</span><br><span class="line">getForObject(String, ResponseClass, Map)</span><br><span class="line">getForObject(URI, ResponseClass);</span><br><span class="line">2.2 PUT请求的方法：</span><br><span class="line"></span><br><span class="line">put(String, RequestClass, Object[])</span><br><span class="line">put(String, RequestClass, Map)</span><br><span class="line">put(URI, RequestClass);</span><br><span class="line">2.3 POST请求的方法：</span><br><span class="line"></span><br><span class="line">postForObject(String, RequestClass, ResonponseClass, Object[])</span><br><span class="line">postForObject(String, RequestClass, ResonponseClass, Map)</span><br><span class="line">postForObject(URI, RequestClass, ResonponseClass);</span><br><span class="line"></span><br><span class="line">.......简单知道他是干什么的就行了,&#96;RestTemplate&#96;是&#96;Spring&#96;提供的用于访问Rest服务的客户端，&#96;RestTemplate&#96;提供了多种便捷访问远程Http服务的方法,能够大大提高客户端的编写效率。</span><br><span class="line"></span><br><span class="line">详细介绍-------------------&gt;</span><br><span class="line"></span><br><span class="line">&lt;https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_41261521&#x2F;article&#x2F;details&#x2F;81293265&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">\1. RestTemplate类提供了3个构造函数</span><br><span class="line"></span><br><span class="line">RestTemplate()</span><br><span class="line">RestTemplate(ClientHttpRequestFactory requestFactory)</span><br><span class="line">org.springframework.http.client.ClientHttpRequestFactory接口的实现类给出底层实现的第三方HTTP客户端软件。</span><br><span class="line"></span><br><span class="line">RestTemplate(java.util.List&lt;HttpMessageConverter&lt;?&gt;&gt; messageConverters)</span><br><span class="line">org.springframework.http.converter.HttpMessageConverter接口的实现对象能够在HTTP消息与Java POJO之间进行数据转换。</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">\2. RestTemplate类能够以多种HTTP的方法，如GET, POST, PUT, DELETE, HEAD, OPTIONS等，向服务器发起HTTP请求。</span><br><span class="line"></span><br><span class="line">2.1 GET请求的方法</span><br><span class="line"></span><br><span class="line">getForObject(String, ResponseClass, Object[])</span><br><span class="line">getForObject(String, ResponseClass, Map)</span><br><span class="line">getForObject(URI, ResponseClass);</span><br><span class="line">2.2 PUT请求的方法：</span><br><span class="line"></span><br><span class="line">put(String, RequestClass, Object[])</span><br><span class="line">put(String, RequestClass, Map)</span><br><span class="line">put(URI, RequestClass);</span><br><span class="line">2.3 POST请求的方法：</span><br><span class="line"></span><br><span class="line">postForObject(String, RequestClass, ResonponseClass, Object[])</span><br><span class="line">postForObject(String, RequestClass, ResonponseClass, Map)</span><br><span class="line">postForObject(URI, RequestClass, ResonponseClass);</span><br><span class="line"></span><br><span class="line">.......简单知道他是干什么的就行了,`RestTemplate`是`Spring`提供的用于访问Rest服务的客户端，`RestTemplate`提供了多种便捷访问远程Http服务的方法,能够大大提高客户端的编写效率。</span><br><span class="line"></span><br><span class="line">详细介绍-------------------&gt;</span><br><span class="line"></span><br><span class="line">&lt;https://blog.csdn.net/weixin_41261521/article/details/81293265&gt;</span><br></pre></td></tr></table></figure>
 <p>以上了解</p>
 <p>RestTemplate可以调用远程服务 所以首先把他注入到spring容器中 编写配置类</p>
 <p>在controller类自动注入调用即可 入门案例调用getForObject(URI, ResponseClass);方法即可</p>
@@ -137,7 +256,7 @@
 <hr>
 <p>第一步修改RestTemplate实例化方法，添加负载均衡注解:@LoadBalanced</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@LoadBalanced</span></span><br><span class="line"><span class="keyword">public</span> RestTemplate restTemplate</span><br></pre></td></tr></table></figure>
-<p>第二步:修改url 字符串  “<a href="http://eureka-provider/goods/findOne/&quot;+id">http://eureka-provider/goods/findOne/&quot;+id</a>  eureka-provider为服务端实例name 不需要再去获得实例</p>
+<p>第二步:修改url 字符串  “<a href="http://eureka-provider/goods/findOne/&quot;+id" target="_blank" rel="noopener">http://eureka-provider/goods/findOne/&quot;+id</a>  eureka-provider为服务端实例name 不需要再去获得实例</p>
 <p>第三步:修改负载均衡策略 添加配置类MyRule 把条件注入spring容器</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> IRule <span class="title">myRule</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//return new RoundRobinRule();//轮询</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> RandomRule();<span class="comment">//随机</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>修改均衡策略还可以通过注解的方式来实现</p>
@@ -150,21 +269,13 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--feign--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>第二步:由于feign是基于ribbon的 所以需要给RestTemplate实例化Bean添加@LoadBalanced</p>
 <p>第三步也就是实现feign的关键步骤了 个人理解就是先伪造provider client  伪造一个借口 使用@FeignClient(value = “XXXXX(实际client的name)”)  该接口内 伪造一个映射提供端提供的方法 再让启动类去注册中心找到这个伪造的方法的真正体</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;FEIGN-PROVIDER&quot;)</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GoodsFeignClient</span> </span>&#123;</span><br><span class="line">      <span class="meta">@GetMapping(&quot;/goods/findOne/&#123;id&#125;&quot;)</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id)</span></span>;&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(value = <span class="string">"FEIGN-PROVIDER"</span>)  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GoodsFeignClient</span> </span>&#123;</span><br><span class="line">      <span class="meta">@GetMapping</span>(<span class="string">"/goods/findOne/&#123;id&#125;"</span>)</span><br><span class="line">      <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> <span class="keyword">int</span> id)</span>;&#125;</span><br></pre></td></tr></table></figure>
 <p>第三步:在启动类 添加 @EnableFeignClients 注解，开启Feign功能</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableDiscoveryClient</span> <span class="comment">// 激活DiscoveryClient</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableFeignClients</span> <span class="comment">//开启Feign的功能</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsumerApp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(ConsumerApp.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableDiscoveryClient</span> <span class="comment">// 激活DiscoveryClient</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableFeignClients</span> <span class="comment">//开启Feign的功能</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsumerApp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(ConsumerApp.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后在consumer 的controller类中直接注入  伪装借口 调用伪装方法 此时就不用了RestTemplate了,也不要去定义URL 简化了开发</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/order&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> GoodsFeignClient goodsFeignClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/goods/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        Goods goods = goodsFeignClient.findGoodsById(id);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> goods;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/order"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> GoodsFeignClient goodsFeignClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/goods/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> <span class="keyword">int</span> id)</span>&#123;</span><br><span class="line"></span><br><span class="line">        Goods goods = goodsFeignClient.findGoodsById(id);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> goods;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Feign-超时配置"><a href="#Feign-超时配置" class="headerlink" title="Feign-超时配置"></a>Feign-超时配置</h3><p>在consumer配置配置文件</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置Ribbon的超时时间</span></span><br><span class="line"><span class="attr">ribbon:</span></span><br><span class="line">  <span class="attr">ConnectTimeout:</span> <span class="number">1000</span> <span class="comment"># 连接超时时间 默认1s</span></span><br><span class="line">  <span class="attr">ReadTimeout:</span> <span class="number">3000</span> <span class="comment"># 逻辑处理的超时时间 默认1s</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置Ribbon的超时时间</span></span><br><span class="line"><span class="attr">ribbon:</span></span><br><span class="line"><span class="attr">  ConnectTimeout:</span> <span class="number">1000</span> <span class="comment"># 连接超时时间 默认1s</span></span><br><span class="line"><span class="attr">  ReadTimeout:</span> <span class="number">3000</span> <span class="comment"># 逻辑处理的超时时间 默认1s</span></span><br></pre></td></tr></table></figure>
 <p>ribbon:顶级属性标签</p>
 <hr>
 <h3 id="Feign-日志记录"><a href="#Feign-日志记录" class="headerlink" title="Feign-日志记录"></a>Feign-日志记录</h3><p>疑问：远程调用都被feign给封装了，如何才能看到请求，响应的细节，数据？</p>
@@ -173,23 +284,19 @@
 <p>操作步骤：</p>
 <ol>
 <li><p>设置当前日志的级别为debug</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置当前的日志级别 debug，feign只支持记录debug级别的日志</span></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="attr">com.itheima:</span> <span class="string">debug</span>     <span class="comment">#调用了feign客户端所在代码的包名</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置当前的日志级别 debug，feign只支持记录debug级别的日志</span></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line"><span class="attr">  level:</span></span><br><span class="line">    <span class="string">com.itheima:</span> <span class="string">debug</span>     <span class="comment">#调用了feign客户端所在代码的包名</span></span><br></pre></td></tr></table></figure>
 <p>logging:顶级属性标签</p>
 </li>
 <li><p>定义Feign日志级别Bean</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FeignLogConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        NONE,不记录</span></span><br><span class="line"><span class="comment">        BASIC,记录基本的请求行，响应状态码数据</span></span><br><span class="line"><span class="comment">        HEADERS,记录基本的请求行，响应状态码数据，记录响应头信息</span></span><br><span class="line"><span class="comment">        FULL;记录完成的请求 响应数据</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Logger.<span class="function">Level <span class="title">level</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Logger.Level.FULL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ol>
 <ol start="3">
 <li><p>启动Feign日志级别Bean</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;FEIGN-PROVIDER&quot;,configuration = FeignLogConfig.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GoodsFeignClient</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/goods/findOne/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(value = <span class="string">"FEIGN-PROVIDER"</span>,configuration = FeignLogConfig.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GoodsFeignClient</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/goods/findOne/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> <span class="keyword">int</span> id)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>测试</p>
-<p><a href="http://localhost:9000/order/goods/1">http://localhost:9000/order/goods/1</a></p>
+<p><a href="http://localhost:9000/order/goods/1" target="_blank" rel="noopener">http://localhost:9000/order/goods/1</a></p>
 </li>
 </ol>
 <hr>
@@ -207,28 +314,17 @@
 <p><img src="C:/Users/86177/Desktop/%E6%95%A3%E8%AF%BE/4_spring%20cloud/day02/spring%20cloud%20day02/image-20200503111117061.png" alt="image-20200503111117061"></p>
 </li>
 <li><p>在application.yml中配置开启 feign.hystrix.enabled = true</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启feign对hystrix的支持</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">hystrix:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启feign对hystrix的支持</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line"><span class="attr">  hystrix:</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol start="3">
 <li><p>定义feign 调用接口实现类，复写方法，即 降级方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Feign 客户端的降级处理类</span></span><br><span class="line"><span class="comment"> * 1. 定义类 实现 Feign 客户端接口</span></span><br><span class="line"><span class="comment"> * 2. 使用<span class="doctag">@Component</span>注解将该类的Bean加入SpringIOC容器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodsFeignClientFallback</span> <span class="keyword">implements</span> <span class="title">GoodsFeignClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        Goods goods = <span class="keyword">new</span> Goods();</span><br><span class="line">        goods.setTitle(<span class="string">&quot;又被降级了~~~&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> goods;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Feign 客户端的降级处理类</span></span><br><span class="line"><span class="comment"> * 1. 定义类 实现 Feign 客户端接口</span></span><br><span class="line"><span class="comment"> * 2. 使用<span class="doctag">@Component</span>注解将该类的Bean加入SpringIOC容器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodsFeignClientFallback</span> <span class="keyword">implements</span> <span class="title">GoodsFeignClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        Goods goods = <span class="keyword">new</span> Goods();</span><br><span class="line">        goods.setTitle(<span class="string">"又被降级了~~~"</span>);</span><br><span class="line">        <span class="keyword">return</span> goods;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol start="4">
 <li><p>在 @FeignClient 注解中使用 fallback 属性设置降级处理类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;HYSTRIX-PROVIDER&quot;,fallback = GoodsFeignClientFallback.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GoodsFeignClient</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/goods/findOne/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(value = <span class="string">"HYSTRIX-PROVIDER"</span>,fallback = GoodsFeignClientFallback.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GoodsFeignClient</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/goods/findOne/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Goods <span class="title">findGoodsById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> <span class="keyword">int</span> id)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>总结：</p>
@@ -236,8 +332,7 @@
 <p>问题：如果程序抛出异常，那么提供方还是消费方的降级方法生效？</p>
 <p>​    提供方生效，因为提供方降级后，将会给消费方返回了正常的结果，所以消费方就不会生效。</p>
 <hr>
-<h3 id="何为gateway网关"><a href="#何为gateway网关" class="headerlink" title="何为gateway网关?"></a>何为gateway网关?</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">• 网关旨在为微服务架构提供一种简单而有效的统一的API路由管理方式。</span><br><span class="line"></span><br><span class="line">• 在微服务架构中，不同的微服务可以有不同的网络地址，各个微服务之间通过互相调用完成用户请求，客户端可能通过调用N个微服务的接口完成一个用户请求。</span><br><span class="line"></span><br><span class="line">• 存在的问题：</span><br><span class="line">    • 客户端多次请求不同的微服务，增加客户端的复杂性</span><br><span class="line">    • 认证复杂，每个服务都要进行认证</span><br><span class="line">    • http请求不同服务次数增加，性能不高</span><br><span class="line">    </span><br><span class="line">• 网关就是系统的入口，封装了应用程序的内部结构，为客户端提供统一服务，一些与业务本身功能无关的公共逻辑可以在这里实现，诸如认证、鉴权、监控、缓存、负载均衡、流量管控、路由转发等</span><br><span class="line"></span><br><span class="line">• 在目前的网关解决方案里，有Nginx+ Lua、Netflix Zuul 、Spring Cloud Gateway等等</span><br></pre></td></tr></table></figure>
-
+<h3 id="何为gateway网关"><a href="#何为gateway网关" class="headerlink" title="何为gateway网关?"></a>何为gateway网关?</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">• 网关旨在为微服务架构提供一种简单而有效的统一的API路由管理方式。</span><br><span class="line"></span><br><span class="line">• 在微服务架构中，不同的微服务可以有不同的网络地址，各个微服务之间通过互相调用完成用户请求，客户端可能通过调用N个微服务的接口完成一个用户请求。</span><br><span class="line"></span><br><span class="line">• 存在的问题：</span><br><span class="line">	• 客户端多次请求不同的微服务，增加客户端的复杂性</span><br><span class="line">	• 认证复杂，每个服务都要进行认证</span><br><span class="line">	• http请求不同服务次数增加，性能不高</span><br><span class="line">	</span><br><span class="line">• 网关就是系统的入口，封装了应用程序的内部结构，为客户端提供统一服务，一些与业务本身功能无关的公共逻辑可以在这里实现，诸如认证、鉴权、监控、缓存、负载均衡、流量管控、路由转发等</span><br><span class="line"></span><br><span class="line">• 在目前的网关解决方案里，有Nginx+ Lua、Netflix Zuul 、Spring Cloud Gateway等等</span><br></pre></td></tr></table></figure>
 <p>网关也是微服务 通常使用默认端口80来启动</p>
 <p>第一步 搭建模块 第二步导入依赖 第三步 编写启动类  第四步 编写配置文件 第五步启动测试</p>
 <ol>
@@ -246,30 +341,21 @@
 </li>
 <li><p>引入依赖：starter-gateway</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--引入gateway 网关--&gt;</span></span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-gateway<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">    <span class="comment">&lt;!-- eureka-client --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ol>
 <ol start="3">
 <li><p>编写启动类,无特殊操作</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiGatewayApp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(ApiGatewayApp.class,args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiGatewayApp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(ApiGatewayApp.class,args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol start="4">
 <li><p>编写配置文件</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">api-gateway-server</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="comment"># 网关配置</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="comment"># 路由配置：转发规则</span></span><br><span class="line">      <span class="attr">routes:</span> <span class="comment">#集合。</span></span><br><span class="line">      <span class="comment"># id: 唯一标识。默认是一个UUID</span></span><br><span class="line">      <span class="comment"># uri: 转发路径</span></span><br><span class="line">      <span class="comment"># predicates: 条件,用于请求网关路径的匹配规则</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">gateway-provider</span></span><br><span class="line">        <span class="attr">uri:</span> <span class="string">http://localhost:8001/</span></span><br><span class="line">        <span class="attr">predicates:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">Path=/goods/**</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">api-gateway-server</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  cloud:</span></span><br><span class="line">    <span class="comment"># 网关配置</span></span><br><span class="line"><span class="attr">    gateway:</span></span><br><span class="line">      <span class="comment"># 路由配置：转发规则</span></span><br><span class="line"><span class="attr">      routes:</span> <span class="comment">#集合。</span></span><br><span class="line">      <span class="comment"># id: 唯一标识。默认是一个UUID</span></span><br><span class="line">      <span class="comment"># uri: 转发路径</span></span><br><span class="line">      <span class="comment"># predicates: 条件,用于请求网关路径的匹配规则</span></span><br><span class="line"></span><br><span class="line"><span class="attr">      - id:</span> <span class="string">gateway-provider</span></span><br><span class="line"><span class="attr">        uri:</span> <span class="attr">http://localhost:8001/</span></span><br><span class="line"><span class="attr">        predicates:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">Path=/goods/**</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol start="5">
 <li><p>启动测试</p>
-<p>访问网关应用: <a href="http://localhost/goods/findOne/2">http://localhost/goods/findOne/2</a></p>
+<p>访问网关应用: <a href="http://localhost/goods/findOne/2" target="_blank" rel="noopener">http://localhost/goods/findOne/2</a></p>
 </li>
 </ol>
 <p>总结： 为网关添加Eureka客户端依赖，能够从注册中心发现服务。在配置路由的uri时，通过lb://服务名称 来获取转发服务器的地址信息。  uri: lb://GATEWAY-CONSUMER</p>
@@ -277,156 +363,13 @@
 <p>分析：</p>
 <p>​    将Eureka注册中心里应用的名称作为uri中的前缀来区分不同的应用。</p>
 <p>配置：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">api-gateway-server</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="comment"># 网关配置</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">locator:</span></span><br><span class="line">          <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 设置为true 请求路径前可以添加微服务名称</span></span><br><span class="line">          <span class="attr">lower-case-service-id:</span> <span class="literal">true</span> <span class="comment"># 允许为小写</span></span><br></pre></td></tr></table></figure>
-
-
-
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">api-gateway-server</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  cloud:</span></span><br><span class="line">    <span class="comment"># 网关配置</span></span><br><span class="line"><span class="attr">    gateway:</span></span><br><span class="line"><span class="attr">      discovery:</span></span><br><span class="line"><span class="attr">        locator:</span></span><br><span class="line"><span class="attr">          enabled:</span> <span class="literal">true</span> <span class="comment"># 设置为true 请求路径前可以添加微服务名称</span></span><br><span class="line"><span class="attr">          lower-case-service-id:</span> <span class="literal">true</span> <span class="comment"># 允许为小写</span></span><br></pre></td></tr></table></figure>
 <p>测试：</p>
 <p>spring_cloud_config   (appolo  nacos)</p>
 <p>config:分布式配置中心 :集中管理配置文件</p>
 <p>bus:消息总线</p>
 <p>stream:消息驱动</p>
-<p>sleuth+zipkin:链路追踪</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 其他篇 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 技能 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Springboot九阳神功]]></title>
-      <url>http://123.56.249.40/2020/08/05/springboot%E4%B9%9D%E9%98%B3%E7%A5%9E%E5%8A%9F/</url>
-      <content type="html"><![CDATA[<a id="more"></a>
-
-<h3 id="何为springboot"><a href="#何为springboot" class="headerlink" title="何为springboot?"></a>何为springboot?</h3><p>可以快速搭建spring工程,不是一个新的框架,它只是对spring进行了高度的封装  此框架不需要配置xml，而是依赖于像MAVEN这样的构建系统</p>
-<p>为何我把springboot称为九阳神功?</p>
-<p>springboot:号称java的九阳神功 是因为 只要学会了springboot 学什么武功都快,甚至你都不需要理解真气是如何运行的,你就能释放出武功招式,简单来说,就是你只需要放技能就行了.</p>
-<p>那什么是spring呢 spring是一种service组件(事务):我愿称之为练武的基础—&gt;打通奇经八脉,里面很复杂,正常打通,需要耗时很久.</p>
-<p>Spring是分层的 Java SE/EE(点击Java SE/EE查看详情)应用 full-stack(全栈,个人理解吹一手 全能) 轻量级开源框架(框架 点击目标查看详情)，以 IoC（Inverse Of Control：反转控制）、DI(依赖注入) 和 AOP（Aspect Oriented Programming：面向切面编程）为内核。</p>
-<p>提供了展现层 SpringMVC和  持久层 Spring JDBCTemplate以及业务层事务管理等众多的企业级应用技术，还能整合开源世界众多著名的第三方框架和类库，逐渐成为使用最多的Java EE 企业应用开源框架</p>
-<p>他是怎么做的呢?</p>
-<p>①导入 Spring 开发的基本包坐标  pom 文件 里面<dependencies>  导入每一个我们需要的第三方依赖jar包                                            spring、springmvc、redis、mybaits、log4j、mysql-connector-java 等等相关jar …</p>
-<p>②编写 Dao 接口和实现类  根据导入的依赖</p>
-<p>③创建 Spring 核心配置文件  applicationContext*.xml 以及配置web.xml :Listener配置、Filter配置、Servlet配置…….</p>
-<p>④在 Spring 配置文件中配置 ,在applicationContext*.xml 文件中配置数据库连接、配置spring事务,配置视图解析器,开启注解、自动扫描功能,<bean>标签 注入Bean定义 (或者@Component系列注解 )</p>
-<p>⑤使用 Spring 的 API 获得 Bean 实例 例如 JbdcTemplate 的实例来操作数据库</p>
-<p>⑥配置完成后部署tomcat、启动调试</p>
-<p>spring 配合springMVC Mybatis 组成了当下主流的一种SSM框架 完成web开发</p>
-<p>总结一下 繁琐点 </p>
-<p>1:需要导入各种<dependency>  几十多种或以上的第三方依赖jar包 还需要解决各种依赖以及版本的冲突                                                       2:IOC容器中需要我们自己去定义各种<bean>标签  来进行bean定义 以及配置数据库连接、配置spring事务,配置视图解析器,开启注解、自动扫描功能  核心配置xml文件需要大量的编写       以及web.xml文件的编写                                                                                                                       </p>
-<p>如此看来 如何解决上述两个问题成为简化开发的关键点</p>
-<p>如何解决繁琐的导入依赖? </p>
-<p>springboot :解决问题1,提供了一种起步依赖 起步依赖本质上是一个Maven项目对象模型（Project Object Model，POM），定义了对其他库的传递依赖， 将实现某项功能的全部依赖 聚合为一个一个依赖 spring以starter 命名</p>
-<p>springboot自动装配:Spring Boot的自动配置是一个运行时（更准确地说，是应用程序启动时）的过程，考虑了众多因素，才决定Spring配置应该用哪个，不该用哪个。该过程是SpringBoot自动完成的。导入的起步依赖jar中已经定义好了,直接使用就可以</p>
-<p>springboot:还额外提供了一些辅助功能,例如嵌入式服务器 例如tomcat 也就无需在pom文件中导入tomcat插件.以psvm 就可以启动项目了.</p>
-<p>Spring Boot自动装配原理源码分析</p>
-<p>Spring Boot规定，项目的主配置类必须放在最外层包，也就是说，所有的类都必须放在主配置类的同级包或者子包里，这么做的用意是什么？我们点开<code>@SpringBootApplication</code>注解慢慢分析</p>
-<p>1:首先打开@SpringBootApplication注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan(excludeFilters = &#123; @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),</span></span><br><span class="line"><span class="meta">      @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>前四个为元注解 (点击标题元数据与元注解查看详情)</p>
-<p>@SpringBootConfiguration:是spring的@Configuration注解  表明该注解为标注配置类                                                                                     </p>
-<p>@EnableAutoConfiguration:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import(AutoConfigurationImportSelector.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration                                                       </span><br></pre></td></tr></table></figure>
-
-<p>​             </p>
-<p>​    @AutoConfigurationPackage:点进该注解:——————-&gt;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Import(AutoConfigurationPackages.Registrar.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoConfigurationPackage</span><br></pre></td></tr></table></figure>
-
-<p>​    —————–&gt;在点进Register，这是一个静态内部类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Registrar</span> <span class="keyword">implements</span> <span class="title">ImportBeanDefinitionRegistrar</span>, <span class="title">DeterminableImports</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(AnnotationMetadata metadata, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">      register(registry, <span class="keyword">new</span> PackageImports(metadata).getPackageNames().toArray(<span class="keyword">new</span> String[<span class="number">0</span>]));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Set&lt;Object&gt; <span class="title">determineImports</span><span class="params">(AnnotationMetadata metadata)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> Collections.singleton(<span class="keyword">new</span> PackageImports(metadata));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<pre><code>          PackageImports(metadata).getPackageNames()得到就是我们启动类(Spring Boot主配置类)所在的包名                                                 @AutoConfigurationPackage注解的作用就是将主配置类所在的包作为自动配置包进行管理                                                                       register(registry, new PackageImports(metadata).getPackageNames().toArray(new String[0]))</code></pre>
-<p>​    @Import(AutoConfigurationImportSelector.class):该注解的作用就是导入一个类到IOC容器，我们先来看一下导入的这个类：自动配置导入选择器 源码里有一个方法<code>selectImports</code>，选择导入</p>
-<p>@ComponentScan:</p>
-<p>这个注解也是Spring中的，它用来将指定包下需要装配的组件注册到容器中</p>
-<p>2:点开注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootConfiguration&#123;.........&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h3 id="Java-SE-EE"><a href="#Java-SE-EE" class="headerlink" title="Java SE/EE"></a>Java SE/EE</h3><p>1:Java SE(J2SE)  java standard Edition</p>
-<p>通常是指Java Standard Edition，Java标准版，就是一般Java程序的开发就可以(如桌面程序)，可以看作是JavaEE的子集。它允许开发和部署在桌面、服务器、嵌入式环境和实施环境中使用的Java应用程序。JavaSE 包括支持Java　Ｗeb服务开发的类，并为Java Platform,Enterprise Edition(Java EE)提供基础。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase.jpg"></h3><p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javase2.gif"></p>
-<p>2:JAVA EE java  enterprise edition</p>
-<p>Java企业版，多用于企业级开发，包括web开发等等。企业版本帮助开发和部署可移植、健壮、可伸缩切安全的服务端Java应用。Java EE是在JavaSE的基础上构建的他提供Web 服务、组建模型、管理和通信API.可以用来实现企业级的面向服务体系结构(service-oriented architecture,SOA)和web2.0应用程序。企业开发传统的框架有SSM和SSH框架</p>
-<p>SSM:springMVC为控制器(controller) ，spring 为事务层(service)， MyBatis 负责持久层（dao）{简化配置,注重注解开发}</p>
-<p>SSH: Struts2为控制器(controller) ，spring 为事务层(service)， hibernate 负责持久层（dao）{注重配置开发,入门较难}</p>
-<p>springboot 横空出世,打破格局</p>
-<p>例如 : 人们常说的SSH =Spring+Struts+Hibernate架构应用整合开发,XML,EJB,WebService,UML/Rose,Ajax,Weblogic,Oracle<br>Java EE 是在 Java SE 的基础上构建的，它提供 Web 服务、组件模型、管理和通信 API，可以用来实现企业级的面向服务体系结构（service-oriented architecture，SOA）和 Web 2.0 应用程序。</p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaee.jpg"></p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\Javaee2.gif"></p>
-<p>JavaWeb ：</p>
-<p>例如 :J DBC，JSP，Servlet，JavaBean，Html，JavaScript，Session/Cookie，MVC设计模式，Tomcat，Eclipse+MyEclipse<br>是指使用Java体系开发网站类应用，JSP属于Java Web范畴，JSP可以简单看作是前端页面嵌入Java代码，会被容器编译成Servlet，然后Servlet会输出HTML代码，最终成为我们看到的页面。</p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb1.jpg"></p>
-<p><img src="C:\Users\86177\Desktop\最强帅的技术思考与分享\九阳神img\javaweb2.gif"></p>
-<p>原文地址:<a href="https://blog.csdn.net/weixin_39297312/article/details/79454642">https://blog.csdn.net/weixin_39297312/article/details/79454642</a></p>
-<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p>java框架就是一些类和接口的集合，通过这些类和接口协调来完成一系列的程序实现。JAVA框架可以分为三层：表示层，业务层和物理层。框架又叫做开发中的半成品，它不能提供整个WEB应用程序的所有东西，但是有了框架，我们就可以集中精力进行业务逻辑的开发而不用去关心它的技术实现以及一些辅助的业务逻辑。大家熟知的Structs和Spring就是表示层和业务层框架的强力代表。</p>
-<h3 id="元数据与元注解"><a href="#元数据与元注解" class="headerlink" title="元数据与元注解"></a>元数据与元注解</h3><p>1.1:元数据MetaDate</p>
-<p>​       任何文件系统中的数据分为数据和元数据。数据是指普通文件中的实际数据，而元数据指用来描述一个文件的特征的系统数据，诸如访问权限、文件拥有者以及文件数据块的分布信息(inode…)等等。在集群文件系统中，分布信息包括文件在磁盘上的位置以及磁盘在集群中的位置。用户需要操作一个文件必须首先得到它的元数据，才能定位到文件的位置并且得到文件的内容或相关属性</p>
-<p>元数据（Meta Date），关于数据的数据或者叫做用来描述数据的数据或者叫做信息的信息。<br>       这些定义都很是抽象，我们可以把元数据简单的理解成，最小的数据单位。元数据可以为数据说明其元素或属性（名称、大小、数据类型、等），或其结构（长度、字段、数据列），或其相关数据（位于何处、如何联系、拥有者）。</p>
-<pre><code>通常情况下元数据可以分为以下三类：固有性元数据、管理性元数据、描述性元数据。
-    固有性元数据；与事物构成有关的元数据。
-    管理性元数据；与事物处理方式有关的元数据。
-    描述性元数据；与事物本质有关的元数据。
-    当然，并不是说所数据总能清晰的划分在以上3类中。比如：一张由kk拍摄的大小为20K的JPG格式的印着一只小狗的圣诞卡照片。
-  它的固有性元数据包括：20K、JPG；管理性元数据：kent拍摄、圣诞卡；描述性元数据：狗、小狗、圣诞、照片、圣诞节、…
-  但是，圣诞卡则可以放在以上任何一个分类中。与事物构成有关（说明这个东东是什么）、与事物处理方式有关（说明这个东东的用途是什么）、与事物本质有关（可以直接用来描述这个东东）。</code></pre>
-<p>1.2:元数据管理方式</p>
-<p>​       元数据管理有两种方式。集中式管理和分布式管理。集中式管理是指在系统中有一个节点专门司职元数据管理，所有元数据都存储在该节点的存储设备上。所有客户端对文件的请求前，都要先对该元数据管理器请求元数据。分布式管理是指将元数据存放在系统的任意节点并且能动态的迁移。对元数据管理的职责也分布到各个不同的节点上。大多数集群文件系统都采用集中式的元数据管理。因为集中式管理实现简单，一致性维护容易，在一定的操作频繁度内可以提供较满意的性能。缺点是单一失效点问题，若该服务器失效，整个系统将无法正常工作。而且，当对元数据的操作过于频繁时，集中的元数据管理成为整个系统的性能瓶颈。<br>​       分布式元数据管理的好处是解决了集中式管理的单一失效点问题， 而且性能不会随着操作频繁而出现瓶颈。其缺点是，实现复杂，一致性维护复杂，对性能有一定影响。</p>
-<p>元数据的类型</p>
-<p>根据功能可将元数据划分为</p>
-<p>管理型元数据、</p>
-<p>描述型元数据、</p>
-<p>保存型元数据、</p>
-<p>技术型元数据、</p>
-<p>使用型元数据。</p>
-<p>根据结构和语境可将元数据划分为三组：</p>
-<p>第一组为全文索引；</p>
-<p>第二组为简单结构化的普通格式，如DC、RFCl807、Template等；</p>
-<p>第三组为结构复杂的特殊领域内的格式，如FGDC、GILS、TEI、EAD等。</p>
-<p>　　根据元数据的应用范围，可分为</p>
-<p>通用性元数据、</p>
-<p>专业性元数据、</p>
-<p>Web元数据、</p>
-<p>多媒体元数据。<br>————————————————<br>原文链接：<a href="https://blog.csdn.net/it_man/java/article/details/8660536">https://blog.csdn.net/it_man/java/article/details/8660536</a></p>
-<p>2.1元注解</p>
-<p>简单来看一下springboot中元注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br></pre></td></tr></table></figure>
-
-<p>@Target:注解的作用目标</p>
-<p>　　@Target(ElementType.TYPE)——接口、类、枚举、注解<br>　　@Target(ElementType.FIELD)——字段、枚举的常量<br>　　@Target(ElementType.METHOD)——方法<br>　　@Target(ElementType.PARAMETER)——方法参数<br>　　@Target(ElementType.CONSTRUCTOR) ——构造函数<br>　　@Target(ElementType.LOCAL_VARIABLE)——局部变量<br>　　@Target(ElementType.ANNOTATION_TYPE)——注解<br>　　@Target(ElementType.PACKAGE)——包</p>
-<p>@Retention：注解的保留位置</p>
-<p>Retention注解决定注解的生命周期:</p>
-<p>　　RetentionPolicy.SOURCE:这种类型的Annotations只在源代码级别保留,编译时就会被忽略,在class字节码文件中不包含。意思是让被该注解,注解的注解只在java源文件中存在，编译成.class文件后注解就不存在了  —&gt;.java<br>　　RetentionPolicy.CLASS:这种类型的Annotations编译时被保留,默认的保留策略,在class文件中存在,但JVM将会忽略,运行时无法获得。意思是让被该注解,注解的注解在java源文件(.java文件)中存在，编译成.class文件后注解也还存在， ——&gt;.class<br>　　RetentionPolicy.RUNTIME:这种类型的Annotations将被JVM保留,所以他们能在运行时被JVM或其他使用反射机制的代码所读取和使用。生命周期在程序运行时都一直存在  —-&gt;内存中的字节码</p>
-<p>@Document：说明该注解将被包含在javadoc中</p>
-<p>问题产生了,何为javadoc?</p>
-<p>javadoc是Sun公司提供的一个技术，它从程序<a href="https://baike.baidu.com/item/%E6%BA%90%E4%BB%A3%E7%A0%81/3969">源代码</a>中抽取类、方法、成员等注释形成一个和源代码配套的API帮助文档。也就是说，只要在编写程序时以一套特定的标签作注释，在程序编写完成后，通过Javadoc就可以同时形成程序的开发文档了。</p>
-<p>javadoc命令是用来生成自己<a href="https://baike.baidu.com/item/API/10154">API</a>文档的，使用方式：使用命令行在目标文件所在目录输入javadoc +文件名.java。</p>
-<p><strong>javadoc -d D:\doc com.itheima.xxx -encoding utf-8 -charset utf-8</strong></p>
-<p>-d D:\doc 表示：doc文件输入目录为D盘的doc文件夹；</p>
-<p> com.itheima.xxx  表示xxx包中所有类需要生成java doc html文件；</p>
-<p>-encoding utf-8 表示：java代码采用的是utf-8字符编码编写的；</p>
-<p>-charset utf-8 表示：java doc html文件为utf-8字符编码。</p>
-<p>详细信息<a href="https://baike.baidu.com/item/javadoc/4640765?fr=aladdin">https://baike.baidu.com/item/javadoc/4640765?fr=aladdin</a></p>
-<p>@Inherited：说明子类可以继承父类中的该注解</p>
-<p>类继承关系中，子类会继承父类使用的注解中被@Inherited修饰的注解</p>
-]]></content>
+<p>sleuth+zipkin:链路追踪</p>]]></content>
       
         <categories>
             
